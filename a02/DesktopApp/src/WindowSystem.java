@@ -3,18 +3,28 @@ import de.rwth.hci.Graphics.GraphicsEventSystem;
 import java.awt.*;
 
 public class WindowSystem extends GraphicsEventSystem {
+    private int width;
+    private int height;
+
     public WindowSystem(int width, int height) {
         super(width, height);
+        this.width = width;
+        this.height = height;
+    }
+
+    public void drawLine(float startX, float startY, float endX, float endY) {
+        double startXCalculated = width * startX;
+        double startYCalculated = height * startY;
+        double endXCalculated = width * endX;
+        double endYCalculated = height * endY;
+        drawLine(startXCalculated, startYCalculated, endXCalculated, endYCalculated);
     }
 
     @Override
-    public void drawLine(double v, double v1, double v2, double v3) {
-        super.drawLine(v, v1, v2, v3);
-    }
 
-    @Override
     protected void handlePaint() {
-        setColor(new Color(255,122,36));
-        drawLine(30, 70, 60, 150);
+        setColor(new Color(255, 122, 36));
+//        drawLine(30, 70, 60, 150);
+        drawLine(0.1f, 0.2f, 0.7f, 0.8f);
     }
 }
