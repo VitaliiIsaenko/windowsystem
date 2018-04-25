@@ -1,15 +1,14 @@
 import de.rwth.hci.Graphics.GraphicsEventSystem;
-
 import java.awt.*;
-import java.util.Set;
+import java.util.HashMap;
 
 public class WindowSystem extends GraphicsEventSystem {
-    private Set<SimpleWindow> simpleWindows;
+    private HashMap<SimpleWindow, Object> simpleWindows;
     private int width;
     private int height;
 
-    public void addSimpleWindow(SimpleWindow simpleWindow){
-        simpleWindows.add(simpleWindow);
+    public void addSimpleWindow(SimpleWindow simpleWindow, Object placement){
+        simpleWindows.put(simpleWindow, placement);
     }
 
     public void removeSimpleWindow(SimpleWindow simpleWindow) {
