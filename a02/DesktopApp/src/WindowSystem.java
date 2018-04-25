@@ -1,13 +1,16 @@
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class WindowSystem extends GraphicsEventSystem {
-    private HashMap<SimpleWindow, Object> simpleWindows;
+    private Map<SimpleWindow, Placement> simpleWindows;
     private int width;
     private int height;
 
-    public void addSimpleWindow(SimpleWindow simpleWindow, Object placement){
+    public void addSimpleWindow(SimpleWindow simpleWindow, Placement placement){
+        simpleWindows = new HashMap<>();
         simpleWindows.put(simpleWindow, placement);
     }
 
@@ -32,8 +35,7 @@ public class WindowSystem extends GraphicsEventSystem {
     @Override
 
     protected void handlePaint() {
-        setColor(new Color(255, 122, 36));
-        drawLine(30, 70, 60, 150);
-        drawLine(0.1f, 0.2f, 0.7f, 0.8f);
+        setColor(new Color(0,0,0));
+        drawLine(0.2f, 0.3f, 0.8f, 0.7f);
     }
 }
