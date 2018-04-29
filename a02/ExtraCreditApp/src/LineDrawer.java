@@ -18,16 +18,11 @@ public class LineDrawer extends JComponent {
         g.drawLine(x1, y1, x2, y2);
     }
 
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(250, 250);
-    }
-
     public LineDrawer() {
-        x1 = 100;
-        y1 = 100;
+        x1 = 150;
         x2 = 150;
-        y2 = 100;
+        y1 = 200;
+        y2 = 200;
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -40,7 +35,7 @@ public class LineDrawer extends JComponent {
 
     private void resizeLine(int y) {
         if (y < prevY) {
-            if (x2 < 250) {
+            if (x2 < getWidth()) {
                 x2++;
                 x1--;
             }
