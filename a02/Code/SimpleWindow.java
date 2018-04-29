@@ -1,3 +1,4 @@
 public class SimpleWindow {
-    private Placement placement;
+    private int width;
+    private int height;
 }
