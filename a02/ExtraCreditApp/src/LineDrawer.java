@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Widget that draws lines
+ */
 public class LineDrawer extends JComponent {
     private int x1;
     private int x2;
@@ -11,6 +14,10 @@ public class LineDrawer extends JComponent {
 
     private int prevY;
 
+    /**
+     * Paints widget
+     * @param g Graphics object or its heir
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -18,6 +25,9 @@ public class LineDrawer extends JComponent {
         g.drawLine(x1, y1, x2, y2);
     }
 
+    /**
+     * Initializes widget, sets initial coordinates for the line to draw
+     */
     public LineDrawer() {
         x1 = 150;
         x2 = 150;
@@ -33,6 +43,10 @@ public class LineDrawer extends JComponent {
         });
     }
 
+    /**
+     * Handles mouse d&d action - changes line's size
+     * @param y new y coordinate of the mouse
+     */
     private void resizeLine(int y) {
         if (y < prevY) {
             if (x2 < getWidth()) {

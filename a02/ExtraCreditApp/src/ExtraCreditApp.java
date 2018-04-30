@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * App to test LineDrawer widget
+ */
 public class ExtraCreditApp {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Extra credit app");
