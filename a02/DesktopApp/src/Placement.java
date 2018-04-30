@@ -1,3 +1,6 @@
+/**
+ * Represents position of window on a window system
+ */
 public class Placement {
     private int x1;
     private int x2;
