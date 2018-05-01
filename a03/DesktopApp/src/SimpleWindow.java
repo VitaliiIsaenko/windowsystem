@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Window representation
  */
@@ -7,12 +9,22 @@ public class SimpleWindow {
     private int endX;
     private int startY;
     private int endY;
+    private Color filledColor;
 
-    public SimpleWindow(int startX, int startY, int endX, int endY){
+    public SimpleWindow(int startX, int startY, int endX, int endY, Color filledColor) {
         this.startX = startX;
         this.endX = endX;
         this.startY = startY;
         this.endY = endY;
+        this.filledColor = filledColor;
+    }
+
+    public Color getFilledColor() {
+        return filledColor;
+    }
+
+    public void setFilledColor(Color filledColor) {
+        this.filledColor = filledColor;
     }
 
     public int getId() {

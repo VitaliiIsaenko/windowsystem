@@ -23,8 +23,8 @@ public class WindowSystem extends GraphicsEventSystem {
     }
 
 
-    public void addSimpleWindow(int x1, int x2, int y1, int y2) {
-        SimpleWindow sw = new SimpleWindow(x1, x2, y1, y2);
+    public void addSimpleWindow(int x1, int x2, int y1, int y2, Color filledColor) {
+        SimpleWindow sw = new SimpleWindow(x1, x2, y1, y2, filledColor);
         simpleWindows.add(sw);
     }
 
@@ -78,11 +78,10 @@ public class WindowSystem extends GraphicsEventSystem {
     protected void handlePaint() {
         setBackground(Color.PINK);
         for (SimpleWindow sw : simpleWindows) {
-            setColor(Color.green);
+            setColor(sw.getFilledColor());
             drawRect(sw.getStartX(), sw.getStartY(), sw.getEndX(), sw.getEndY());
             fillRect(sw.getStartX(), sw.getStartY(), sw.getEndX(),  sw.getEndY());
         }
-
     }
 
     private SimpleWindow getWindowById(int id) {
