@@ -1,7 +1,6 @@
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
