@@ -1,6 +1,7 @@
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 import java.awt.*;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,22 +16,16 @@ public class WindowSystem extends GraphicsEventSystem {
 
     /**
      * Adds windows to the window system
-     *
      * @param simpleWindow window to add
      */
-    public void addSimpleWindow(SimpleWindow simpleWindow) {
+    public int addSimpleWindow(SimpleWindow simpleWindow) {
+        simpleWindow.setId(getNextWindowId());
         simpleWindows.add(simpleWindow);
-    }
-
-
-    public void addSimpleWindow(int x1, int x2, int y1, int y2, Color filledColor) {
-        SimpleWindow sw = new SimpleWindow(x1, x2, y1, y2, filledColor);
-        simpleWindows.add(sw);
+        return simpleWindow.getId();
     }
 
     /**
      * Removes window from the window system
-     *
      * @param id identficator of window to remove
      */
     public void removeSimpleWindow(int id) {
@@ -93,5 +88,12 @@ public class WindowSystem extends GraphicsEventSystem {
             }
         }
         return foundWindow;
+    }
+
+    private int getNextWindowId(){
+        int maxId = simpleWindows.stream().map(sw -> sw.getId())
+                .mapToInt(id -> id)
+                .max().orElse(0);
+        return maxId;
     }
 }
