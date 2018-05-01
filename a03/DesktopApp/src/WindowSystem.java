@@ -15,28 +15,36 @@ public class WindowSystem extends GraphicsEventSystem {
 
     /**
      * Adds windows to the window system
+     *
      * @param simpleWindow window to add
      */
-    public void addSimpleWindow(SimpleWindow simpleWindow){
+    public void addSimpleWindow(SimpleWindow simpleWindow) {
         simpleWindows.add(simpleWindow);
+    }
+
+
+    public void addSimpleWindow(int x1, int x2, int y1, int y2) {
+        SimpleWindow sw = new SimpleWindow(x1, x2, y1, y2);
+        simpleWindows.add(sw);
     }
 
     /**
      * Removes window from the window system
-     * @param simpleWindow window to remove
+     *
+     * @param id identficator of window to remove
      */
-    public void removeSimpleWindow(SimpleWindow simpleWindow) {
-        simpleWindows.remove(simpleWindow);
+    public void removeSimpleWindow(int id) {
+        simpleWindows.remove(getWindowById(id));
     }
 
     /**
      * finds window on the window system by coordinates
-     * @param x absolute x position on the window system
-     * @param y absolute y position on the window system
+     *
+     * @param id identificator of required window
      * @return found simple window or null if not found
      */
-    public SimpleWindow findSimpleWindow(int x, int y){
-        return new SimpleWindow();
+    public SimpleWindow findSimpleWindow(int id) {
+        return getWindowById(id);
     }
 
     public WindowSystem(int width, int height) {
@@ -49,10 +57,11 @@ public class WindowSystem extends GraphicsEventSystem {
 
     /**
      * Draws a line on the window system
+     *
      * @param startX starting x position on the window system
      * @param startY starting y position on the window system
-     * @param endX ending x position on the window system
-     * @param endY ending y position on the window system
+     * @param endX   ending x position on the window system
+     * @param endY   ending y position on the window system
      */
     public void drawLine(float startX, float startY, float endX, float endY) {
         double startXCalculated = width * startX;
@@ -67,8 +76,23 @@ public class WindowSystem extends GraphicsEventSystem {
      */
     @Override
     protected void handlePaint() {
-        setColor(new Color(0,0,0));
-        drawLine(0.2f, 0.3f, 0.8f, 0.7f);
+        setBackground(Color.PINK);
+        for (SimpleWindow sw : simpleWindows) {
+            setColor(Color.green);
+            drawRect(sw.getStartX(), sw.getStartY(), sw.getEndX(), sw.getEndY());
+            fillRect(sw.getStartX(), sw.getStartY(), sw.getEndX(),  sw.getEndY());
+        }
 
+    }
+
+    private SimpleWindow getWindowById(int id) {
+        SimpleWindow foundWindow = null;
+        for (SimpleWindow sw :
+                simpleWindows) {
+            if (sw.getId() == id) {
+                foundWindow = sw;
+            }
+        }
+        return foundWindow;
     }
 }

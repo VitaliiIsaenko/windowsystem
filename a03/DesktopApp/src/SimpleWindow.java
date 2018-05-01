@@ -3,12 +3,17 @@
  */
 public class SimpleWindow {
     private int id;
-    private int x1;
-    private int x2;
-    private int y1;
-    private int y2;
-    private int width;
-    private int height;
+    private int startX;
+    private int endX;
+    private int startY;
+    private int endY;
+
+    public SimpleWindow(int startX, int startY, int endX, int endY){
+        this.startX = startX;
+        this.endX = endX;
+        this.startY = startY;
+        this.endY = endY;
+    }
 
     public int getId() {
         return id;
@@ -18,43 +23,43 @@ public class SimpleWindow {
         this.id = id;
     }
 
-    public int getX1() {
-        return x1;
+    public int getStartX() {
+        return startX;
     }
 
-    public void setX1(int x1) {
-        this.x1 = x1;
+    public void setStartX(int startX) {
+        this.startX = startX;
     }
 
-    public int getX2() {
-        return x2;
+    public int getEndX() {
+        return endX;
     }
 
-    public void setX2(int x2) {
-        this.x2 = x2;
+    public void setEndX(int endX) {
+        this.endX = endX;
     }
 
-    public int getY1() {
-        return y1;
+    public int getStartY() {
+        return startY;
     }
 
-    public void setY1(int y1) {
-        this.y1 = y1;
+    public void setStartY(int startY) {
+        this.startY = startY;
     }
 
-    public int getY2() {
-        return y2;
+    public int getEndY() {
+        return endY;
     }
 
-    public void setY2(int y2) {
-        this.y2 = y2;
+    public void setEndY(int endY) {
+        this.endY = endY;
     }
 
     public int getWidth() {
-        return x2 - x1;
+        return endX - startX;
     }
 
     public int getHeight() {
-        return y2 - y1;
+        return endY - startY;
     }
 }
