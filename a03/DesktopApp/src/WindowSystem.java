@@ -11,8 +11,25 @@ import java.util.List;
  */
 public class WindowSystem extends GraphicsEventSystem {
     private List<SimpleWindow> simpleWindows;
+
     private int width;
     private int height;
+
+    public WindowSystem(int width, int height) {
+        super(width, height);
+        this.width = width;
+        this.height = height;
+
+        simpleWindows = new LinkedList<>();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     /**
      * Adds windows to the window system
@@ -42,13 +59,7 @@ public class WindowSystem extends GraphicsEventSystem {
         return getWindowById(id);
     }
 
-    public WindowSystem(int width, int height) {
-        super(width, height);
-        this.width = width;
-        this.height = height;
 
-        simpleWindows = new LinkedList<>();
-    }
 
     /**
      * Draws a line on the window system
@@ -74,8 +85,8 @@ public class WindowSystem extends GraphicsEventSystem {
         setBackground(Color.PINK);
         for (SimpleWindow sw : simpleWindows) {
             setColor(sw.getFilledColor());
-            drawRect(sw.getStartX(), sw.getStartY(), sw.getEndX(), sw.getEndY());
-            fillRect(sw.getStartX(), sw.getStartY(), sw.getEndX(),  sw.getEndY());
+            drawRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
+            fillRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
         }
     }
 

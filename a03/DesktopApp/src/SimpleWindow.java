@@ -5,17 +5,14 @@ import java.awt.*;
  */
 public class SimpleWindow {
     private int id;
-    private int startX;
-    private int endX;
-    private int startY;
-    private int endY;
+    private Point startPoint;
+    private Point endPoint;
+
     private Color filledColor;
 
-    public SimpleWindow(int startX, int startY, int endX, int endY, Color filledColor) {
-        this.startX = startX;
-        this.endX = endX;
-        this.startY = startY;
-        this.endY = endY;
+    public SimpleWindow(Point startPoint, Point endPoint, Color filledColor) {
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
         this.filledColor = filledColor;
     }
 
@@ -35,43 +32,20 @@ public class SimpleWindow {
         this.id = id;
     }
 
-    public int getStartX() {
-        return startX;
+
+    public Point getStartPoint() {
+        return startPoint;
     }
 
-    public void setStartX(int startX) {
-        this.startX = startX;
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
     }
 
-    public int getEndX() {
-        return endX;
+    public Point getEndPoint() {
+        return endPoint;
     }
 
-    public void setEndX(int endX) {
-        this.endX = endX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
-    }
-
-    public int getEndY() {
-        return endY;
-    }
-
-    public void setEndY(int endY) {
-        this.endY = endY;
-    }
-
-    public int getWidth() {
-        return endX - startX;
-    }
-
-    public int getHeight() {
-        return endY - startY;
+    public void setEndPoint(Point endPoint) {
+        this.endPoint = endPoint;
     }
 }
