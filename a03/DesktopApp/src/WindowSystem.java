@@ -1,24 +1,25 @@
 import de.rwth.hci.Graphics.GraphicsEventSystem;
+
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
  * Window system. Has responsibilities for managing windows
  */
 public class WindowSystem extends GraphicsEventSystem {
-    private Map<Placement, SimpleWindow> simpleWindows;
+    private List<SimpleWindow> simpleWindows;
     private int width;
     private int height;
 
     /**
      * Adds windows to the window system
-     * @param preferredPlacement preferred window position on the window system
      * @param simpleWindow window to add
      */
-    public void addSimpleWindow(Placement preferredPlacement, SimpleWindow simpleWindow){
-        simpleWindows.put(preferredPlacement, simpleWindow);
+    public void addSimpleWindow(SimpleWindow simpleWindow){
+        simpleWindows.add(simpleWindow);
     }
 
     /**
@@ -44,7 +45,7 @@ public class WindowSystem extends GraphicsEventSystem {
         this.width = width;
         this.height = height;
 
-        simpleWindows = new HashMap<>();
+        simpleWindows = new LinkedList<>();
     }
 
     /**
@@ -69,5 +70,6 @@ public class WindowSystem extends GraphicsEventSystem {
     protected void handlePaint() {
         setColor(new Color(0,0,0));
         drawLine(0.2f, 0.3f, 0.8f, 0.7f);
+
     }
 }
