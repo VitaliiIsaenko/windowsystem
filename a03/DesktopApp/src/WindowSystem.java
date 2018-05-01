@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class WindowSystem extends GraphicsEventSystem {
     private List<SimpleWindow> simpleWindows;
+    private IWindowManager windowManager;
 
     private int width;
     private int height;
@@ -23,6 +24,11 @@ public class WindowSystem extends GraphicsEventSystem {
         simpleWindows = new LinkedList<>();
     }
 
+    public void setWindowManager(WindowManager windowManager) {
+        this.windowManager = windowManager;
+    }
+
+
     public int getWidth() {
         return width;
     }
@@ -31,8 +37,13 @@ public class WindowSystem extends GraphicsEventSystem {
         return height;
     }
 
+    public List<SimpleWindow> getSimpleWindows() {
+        return simpleWindows;
+    }
+
     /**
      * Adds windows to the window system
+     *
      * @param simpleWindow window to add
      */
     public int addSimpleWindow(SimpleWindow simpleWindow) {
@@ -43,6 +54,7 @@ public class WindowSystem extends GraphicsEventSystem {
 
     /**
      * Removes window from the window system
+     *
      * @param id identficator of window to remove
      */
     public void removeSimpleWindow(int id) {
@@ -58,8 +70,6 @@ public class WindowSystem extends GraphicsEventSystem {
     public SimpleWindow findSimpleWindow(int id) {
         return getWindowById(id);
     }
-
-
 
     /**
      * Draws a line on the window system
@@ -83,10 +93,14 @@ public class WindowSystem extends GraphicsEventSystem {
     @Override
     protected void handlePaint() {
         setBackground(Color.PINK);
+
         for (SimpleWindow sw : simpleWindows) {
             setColor(sw.getFilledColor());
             drawRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
             fillRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
+        }
+        if (windowManager != null) {
+            windowManager.decorateWindows();
         }
     }
 
@@ -101,7 +115,7 @@ public class WindowSystem extends GraphicsEventSystem {
         return foundWindow;
     }
 
-    private int getNextWindowId(){
+    private int getNextWindowId() {
         int maxId = simpleWindows.stream().map(sw -> sw.getId())
                 .mapToInt(id -> id)
                 .max().orElse(0);

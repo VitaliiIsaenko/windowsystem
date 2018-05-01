@@ -7,16 +7,16 @@ public class Point {
     public Point(WindowSystem contextWindowSystem, int x, int y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > contextWindowSystem.getWidth() || y < 0 || y > contextWindowSystem.getHeight()) {
-            throw  new IllegalArgumentException("Coordinate values should not be negative or out of window size");
+            throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
         }
-        this.x = (float)x/contextWindowSystem.getWidth();
-        this.y = (float)y/contextWindowSystem.getHeight();
+        this.x = (float) x / contextWindowSystem.getWidth();
+        this.y = (float) y / contextWindowSystem.getHeight();
     }
 
     public Point(WindowSystem contextWindowSystem, float x, float y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > 1 || y < 0 || y > 1) {
-            throw  new IllegalArgumentException("Relative values of coordinates should be between 0 and 1");
+            throw new IllegalArgumentException("Relative values of coordinates should be between 0 and 1");
         }
         this.x = x;
         this.y = y;
@@ -28,22 +28,34 @@ public class Point {
     }
 
     public void setX(float x) {
+        if (x < 0 || x > 1) {
+            throw new IllegalArgumentException("Relative values of coordinates should be between 0 and 1");
+        }
         this.x = x;
     }
 
     public void setX(int x) {
-        this.x = x/contextWindowSystem.getWidth();
+        if (x < 0 || x > contextWindowSystem.getWidth()) {
+            throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
+        }
+        this.x = (float) x / contextWindowSystem.getWidth();
     }
 
     public int getY() {
-        return Math.round(this.x * contextWindowSystem.getHeight());
+        return Math.round(this.y * contextWindowSystem.getHeight());
     }
 
     public void setY(float y) {
+        if (y < 0 || y > 1) {
+            throw new IllegalArgumentException("Relative values of coordinates should be between 0 and 1");
+        }
         this.y = y;
     }
 
     public void setY(int y) {
-        this.y = y/contextWindowSystem.getHeight();
+        if (y < 0 || y > contextWindowSystem.getWidth()) {
+            throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
+        }
+        this.y = (float) y / contextWindowSystem.getHeight();
     }
 }
