@@ -1,11 +1,17 @@
 import java.awt.*;
 
-public class WindowManager implements IWindowManager{
+public class WindowManager implements IWindowManager {
     private WindowSystem windowSystem;
 
     public WindowManager(WindowSystem windowSystem) {
         this.windowSystem = windowSystem;
         windowSystem.setWindowManager(this);
+
+//        windowSystem.handleMouseDragged();
+
+        for (SimpleWindow sw : windowSystem.getSimpleWindows()) {
+//            sw.
+        }
     }
 
     private void addTitleBars() {
@@ -28,11 +34,10 @@ public class WindowManager implements IWindowManager{
             windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
             windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
         }
-
     }
 
     public void addSimpleWindow(int width, int height) {
-        if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()){
+        if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
         Point startPoint = new Point(windowSystem, 10, 10);
@@ -43,5 +48,9 @@ public class WindowManager implements IWindowManager{
     @Override
     public void decorateWindows() {
         addTitleBars();
+    }
+
+    public void dragWindow() {
+
     }
 }

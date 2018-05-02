@@ -11,6 +11,7 @@ public class MyApp {
 
         WindowManager wm = new WindowManager(ws);
         wm.addSimpleWindow(100,200);
+        wm.addSimpleWindow(200,300);
 
 
 
