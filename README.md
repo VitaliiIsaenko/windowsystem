@@ -7,7 +7,7 @@
 
 When the green button in top right corner of any window is clicked, the simple window object is removed from the list simpleWindows and added to the list minimisedSimpleWindows. 
 
-All of the simpleWindows in the minimisedSimpleWindows list are **displayed as icons** in the **bottom left** corner of the panel. When their dedicated button is pressed the simpleWindow object is **removed** from the **simpleWindows** list and **added** to the **minimisedSimpleWindows** list 
+All of the simpleWindows in the minimisedSimpleWindows list are **displayed as icons** in the **bottom left** corner of the panel. When their dedicated button is pressed the simpleWindow object is **removed** from the  **minimisedSimpleWindows** list and **added** to the **simpleWindows** list  (get maximised)
 
 
 ## Window Reordering 
