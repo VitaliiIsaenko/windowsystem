@@ -8,12 +8,6 @@ public class WindowManager implements IWindowManager {
     public WindowManager(WindowSystem windowSystem) {
         this.windowSystem = windowSystem;
         windowSystem.setWindowManager(this);
-
-//        windowSystem.handleMouseDragged();
-
-        for (SimpleWindow sw : windowSystem.getSimpleWindows()) {
-//            sw.
-        }
     }
 
     private void addTitleBars() {
@@ -43,13 +37,13 @@ public class WindowManager implements IWindowManager {
         }
     }
 
-    public void addSimpleWindow(int width, int height) {
+    public void addSimpleWindow(int width, int height,String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
         Point startPoint = new Point(windowSystem, 10, 10);
         Point endPoint = new Point(windowSystem, width, height);
-        windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK,"Simple Window"));
+        windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK,title));
     }
 
     @Override

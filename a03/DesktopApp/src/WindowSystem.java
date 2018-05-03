@@ -109,17 +109,31 @@ public class WindowSystem extends GraphicsEventSystem {
 
     @Override
     public void handleMouseClicked(int x, int y) {
-        for(SimpleWindow simpleWindow : simpleWindows) {
-            if(x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()){
-                simpleWindows.remove(simpleWindow.getId());
+        for(int i = 0;i < simpleWindows.size();i++) {
+            SimpleWindow simpleWindow = simpleWindows.get(i);
+            if(x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15){
+                System.out.println("Window: " + simpleWindow.getTitle() +  " closed");
+                simpleWindows.remove(i);
                 requestRepaint();
             } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
                     && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()){
-                System.out.println("Check if window is active, no => bring it to the front");
+                System.out.println("Window: " + simpleWindow.getTitle() +  " clicked");
             }
         }
     }
+
+    @Override
+    public void handleMouseDragged(int x, int y) {
+        for(int i = 0;i < simpleWindows.size();i++) {
+            SimpleWindow simpleWindow = simpleWindows.get(i);
+            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()){
+                System.out.println("Window" + simpleWindow.getTitle() +  "is being draged");
+            }
+        }
+    }
+
 
 
     private SimpleWindow getWindowById(int id) {
