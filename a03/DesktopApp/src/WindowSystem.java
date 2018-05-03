@@ -126,31 +126,31 @@ public class WindowSystem extends GraphicsEventSystem {
             // Adding close button to the window
             Point exitStartPoint = new Point(this, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
             Point exitEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
-            this.setColor(Color.RED);
-            this.drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-            this.fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+            setColor(Color.RED);
+            drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+            fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
 
 
             // Adding minimise button to the window
             Point minStartPoint = new Point(this, simpleWindow.getEndPoint().getX() - 30, simpleWindow.getStartPoint().getY());
             Point minEndPoint = new Point(this, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY() + 15);
-            this.setColor(Color.GREEN);
-            this.drawRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
-            this.fillRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
+            setColor(Color.GREEN);
+            drawRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
+            fillRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
 
-            this.setColor(Color.BLACK);
-            this.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-            this.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
+            setColor(Color.BLACK);
+            drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+            drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
         }
 
         for (int i = 0;i < minimisedSimpleWindows.size();i++){
             SimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
-            this.setColor(Color.GREEN);
+            setColor(Color.GREEN);
 
-            this.drawRect(50 * i + 10,550,50 * i + 50,580);
-            this.fillRect(50 * i + 10,550,50 * i + 50,580);
-            this.setColor(Color.WHITE);
-            this.drawString(Integer.toString(i),50 * i + 13,565);
+            drawRect(50 * i + 10,550,50 * i + 50,580);
+            fillRect(50 * i + 10,550,50 * i + 50,580);
+            setColor(Color.WHITE);
+            drawString(Integer.toString(i),50 * i + 13,565);
         }
 
     }
@@ -158,6 +158,7 @@ public class WindowSystem extends GraphicsEventSystem {
     @Override
     public void handleMouseClicked(int x, int y) {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
+        System.out.println(simpleWindows);
         for (int i = simpleWindows.size() - 1; i >= 0; i--) {
             SimpleWindow simpleWindow = simpleWindows.get(i);
             if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
@@ -165,24 +166,29 @@ public class WindowSystem extends GraphicsEventSystem {
                 System.out.println("Window: " + simpleWindow.getTitle() + " closed");
                 simpleWindows.remove(i);
                 requestRepaint();
-            } else if(x >= simpleWindow.getEndPoint().getX() - 30 && x <= simpleWindow.getEndPoint().getX() - 15
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15) {
+            } else if(x > simpleWindow.getEndPoint().getX() - 30 && x < simpleWindow.getEndPoint().getX() - 15
+                    && y > simpleWindow.getStartPoint().getY() && y < simpleWindow.getStartPoint().getY() + 15) {
                 System.out.println("Window: " + simpleWindow.getTitle() + " minimised");
-                simpleWindows.remove(i);
                 minimisedSimpleWindows.add(simpleWindow);
+                simpleWindows.remove(simpleWindow);
                 requestRepaint();
-            } else if(x >= (50 * i  + 10) && x <= (50 * i + 50) && y >= 550 && y <= 580) {
-                System.out.println("asd");
-                minimisedSimpleWindows.remove(i);
-                simpleWindows.add(simpleWindow);
-                requestRepaint();
-            }  else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+            } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
                     && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
                 System.out.println("Window: " + simpleWindow.getTitle() + " clicked at x:" + x + " - y:" + y);
                 simpleWindows.remove(i);
                 simpleWindows.add(simpleWindow);
                 requestRepaint();
                 break;
+            }
+        }
+
+        for (int i = 0; i < minimisedSimpleWindows.size();i++){
+            SimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
+            if(x > (50 * i  + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
+                System.out.println("Maximised Window");
+                simpleWindows.add(simpleWindow);
+                minimisedSimpleWindows.remove(simpleWindow);
+                requestRepaint();
             }
         }
     }
