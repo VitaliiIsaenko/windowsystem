@@ -2,7 +2,7 @@ package com.company;
 
 import java.awt.Color;
 
-public class Main {
+public class MyApp {
 
     public static void main(String[] args) {
         WindowSystem ws = new WindowSystem(600,600);
