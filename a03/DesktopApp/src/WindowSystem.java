@@ -98,25 +98,30 @@ public class WindowSystem extends GraphicsEventSystem {
     protected void handlePaint() {
         setBackground(Color.PINK);
 
-        for (SimpleWindow sw : simpleWindows) {
-            setColor(sw.getFilledColor());
-            drawRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
-            fillRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
+        for (int i = 0; i < simpleWindows.size(); i++){
+            SimpleWindow simpleWindow = simpleWindows.get(i);
+            setColor(simpleWindow.getFilledColor());
+            drawRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
+            fillRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
 
-            Point titleStartPoint = sw.getStartPoint();
-            Point titleEndPoint = new Point(this, sw.getEndPoint().getX(), sw.getStartPoint().getY() + 15);
+            Point titleStartPoint = simpleWindow.getStartPoint();
+            Point titleEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
 
-            setColor(Color.white);
+            if (i == (simpleWindows.size() - 1)) {
+                setColor(Color.CYAN);
+            } else {
+                setColor(Color.white);
+            }
             drawRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
             fillRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
 
             // Adding title to the window
             setColor(Color.BLACK);
-            drawString(sw.getTitle(), titleStartPoint.getX(), titleStartPoint.getY() + 10);
+            drawString(simpleWindow.getTitle(), titleStartPoint.getX(), titleStartPoint.getY() + 10);
 
 
-            Point exitStartPoint = new Point(this, sw.getEndPoint().getX() - 15, sw.getStartPoint().getY());
-            Point exitEndPoint = new Point(this, sw.getEndPoint().getX(), sw.getStartPoint().getY() + 15);
+            Point exitStartPoint = new Point(this, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
+            Point exitEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
 
             this.setColor(Color.RED);
             this.drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
@@ -126,6 +131,7 @@ public class WindowSystem extends GraphicsEventSystem {
             this.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
             this.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
         }
+
     }
 
     @Override
@@ -182,17 +188,17 @@ public class WindowSystem extends GraphicsEventSystem {
 
     private SimpleWindow getWindowById(int id) {
         SimpleWindow foundWindow = null;
-        for (SimpleWindow sw :
+        for (SimpleWindow simpleWindow :
                 simpleWindows) {
-            if (sw.getId() == id) {
-                foundWindow = sw;
+            if (simpleWindow.getId() == id) {
+                foundWindow = simpleWindow;
             }
         }
         return foundWindow;
     }
 
     private int getNextWindowId() {
-        int maxId = simpleWindows.stream().map(sw -> sw.getId())
+        int maxId = simpleWindows.stream().map(simpleWindow -> simpleWindow.getId())
                 .mapToInt(id -> id)
                 .max().orElse(0);
         return maxId;
