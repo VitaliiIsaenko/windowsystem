@@ -1,3 +1,5 @@
+package com.company;
+
 import java.awt.*;
 
 /**
@@ -7,13 +9,14 @@ public class SimpleWindow {
     private int id;
     private Point startPoint;
     private Point endPoint;
-
+    private String title;
     private Color filledColor;
 
-    public SimpleWindow(Point startPoint, Point endPoint, Color filledColor) {
+    public SimpleWindow(Point startPoint, Point endPoint, Color filledColor,String title) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.filledColor = filledColor;
+        this.title = title;
     }
 
     public Color getFilledColor() {
@@ -47,5 +50,13 @@ public class SimpleWindow {
 
     public void setEndPoint(Point endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

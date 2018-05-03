@@ -1,3 +1,5 @@
+package com.company;
+
 public class Point {
     private final WindowSystem contextWindowSystem;
 

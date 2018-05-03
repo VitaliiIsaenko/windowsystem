@@ -1,3 +1,5 @@
+package com.company;
+
 import java.awt.*;
 
 public class WindowManager implements IWindowManager {
@@ -23,6 +25,11 @@ public class WindowManager implements IWindowManager {
             windowSystem.drawRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
             windowSystem.fillRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
 
+            // Adding title to the window
+            windowSystem.setColor(Color.BLACK);
+            windowSystem.drawString(sw.getTitle(),  titleStartPoint.getX(), titleStartPoint.getY() + 10);
+
+
             Point exitStartPoint = new Point(windowSystem, sw.getEndPoint().getX() - 15, sw.getStartPoint().getY());
             Point exitEndPoint = new Point(windowSystem, sw.getEndPoint().getX(), sw.getStartPoint().getY() + 15);
 
@@ -42,7 +49,7 @@ public class WindowManager implements IWindowManager {
         }
         Point startPoint = new Point(windowSystem, 10, 10);
         Point endPoint = new Point(windowSystem, width, height);
-        windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.GRAY));
+        windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK,"Simple Window"));
     }
 
     @Override

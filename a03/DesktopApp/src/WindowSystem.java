@@ -1,3 +1,5 @@
+package com.company;
+
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 import java.awt.*;
@@ -98,6 +100,7 @@ public class WindowSystem extends GraphicsEventSystem {
             setColor(sw.getFilledColor());
             drawRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
             fillRect(sw.getStartPoint().getX(), sw.getStartPoint().getY(), sw.getEndPoint().getX(), sw.getEndPoint().getY());
+
         }
         if (windowManager != null) {
             windowManager.decorateWindows();
