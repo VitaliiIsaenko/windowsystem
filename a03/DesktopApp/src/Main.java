@@ -10,6 +10,7 @@ public class Main {
         WindowManager wm = new WindowManager(ws);
         wm.addSimpleWindow(200,200);
         wm.addSimpleWindow(200,200);
+        wm.addSimpleWindow(200,200);
 
     }
 }
