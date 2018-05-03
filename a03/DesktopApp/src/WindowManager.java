@@ -22,7 +22,7 @@ public class WindowManager implements IWindowManager {
         }
         Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
                 (windowSystem.getSimpleWindows().size() + 1) * 30);
-        Point endPoint = new Point(windowSystem, width, height);
+        Point endPoint = new Point(windowSystem, width +startPoint.getX(), height+startPoint.getY());
         windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK,title));
     }
 

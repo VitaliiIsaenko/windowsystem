@@ -107,11 +107,13 @@ public class WindowSystem extends GraphicsEventSystem {
             Point titleStartPoint = simpleWindow.getStartPoint();
             Point titleEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
 
+            // This sets the color of the top bar
             if (i == (simpleWindows.size() - 1)) {
                 setColor(Color.CYAN);
             } else {
                 setColor(Color.white);
             }
+            // Draw the top bar of the window
             drawRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
             fillRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
 
@@ -168,6 +170,7 @@ public class WindowSystem extends GraphicsEventSystem {
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
                 SimpleWindow simpleWindow = simpleWindows.get(simpleWindows.size()-1);
+                // Check if the dragged coordinates are in the window
                 if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
                         && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
                     Point startPointNew = new Point(this, simpleWindow.getStartPoint().getX() + x2,
