@@ -19,6 +19,11 @@ public class SimpleWindow {
         this.title = title;
     }
 
+    public void setPosition(Point startPoint,Point endPoint){
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+    }
+
     public Color getFilledColor() {
         return filledColor;
     }

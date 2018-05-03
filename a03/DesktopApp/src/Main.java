@@ -9,8 +9,6 @@ public class Main {
 
         WindowManager wm = new WindowManager(ws);
         wm.addSimpleWindow(500,200,"Window 1");
-        wm.addSimpleWindow(400,200,"Window 2");
-        wm.addSimpleWindow(200,200,"Window 3");
 
 
     }
