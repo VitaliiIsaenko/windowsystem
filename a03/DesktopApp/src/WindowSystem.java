@@ -135,7 +135,7 @@ public class WindowSystem extends GraphicsEventSystem {
         } else {
             int x2 = x - lastMousePosition.getX();
             int y2 = y - lastMousePosition.getY();
-            if (Math.abs(x2) >= 5 || Math.abs(y2) >= 5) {
+            if (Math.abs(x2) >= 10 || Math.abs(y2) >= 15) {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());

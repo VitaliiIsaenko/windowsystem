@@ -10,6 +10,5 @@ public class Main {
         WindowManager wm = new WindowManager(ws);
         wm.addSimpleWindow(500,200,"Window 1");
 
-
     }
 }
