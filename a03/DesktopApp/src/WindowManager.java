@@ -20,8 +20,8 @@ public class WindowManager implements IWindowManager {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
-        Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 10,
-                (windowSystem.getSimpleWindows().size() + 1) * 10);
+        Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
+                (windowSystem.getSimpleWindows().size() + 1) * 30);
         Point endPoint = new Point(windowSystem, width, height);
         windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK,title));
     }
