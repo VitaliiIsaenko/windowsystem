@@ -107,6 +107,16 @@ public class WindowSystem extends GraphicsEventSystem {
         }
     }
 
+    @Override
+    public void handleMouseClicked(int x, int y) {
+        for(SimpleWindow simpleWindow : simpleWindows){
+            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()){
+                System.out.println("Mouse clicked in window");
+            }
+        }
+    }
+
     private SimpleWindow getWindowById(int id) {
         SimpleWindow foundWindow = null;
         for (SimpleWindow sw :
