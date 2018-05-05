@@ -158,25 +158,11 @@ public class WindowSystem extends GraphicsEventSystem {
         } else {
             int x2 = x - lastMousePosition.getX();
             int y2 = y - lastMousePosition.getY();
-            if (Math.abs(x2) >= 10 || Math.abs(y2) >= 10) {
+            if (Math.abs(x2) >= 15 || Math.abs(y2) >= 15) {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
-                if (simpleWindows.size() > 0) {
-                    SimpleWindow simpleWindow = simpleWindows.get(simpleWindows.size()-1);
-                    // Check if the dragged coordinates are in the window
-                    if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-                            && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
-                        Point startPointNew = new Point(this, simpleWindow.getStartPoint().getX() + x2,
-                                simpleWindow.getStartPoint().getY() + y2);
-                        Point endPointNew = new Point(this, simpleWindow.getEndPoint().getX() + x2,
-                                simpleWindow.getEndPoint().getY() + y2);
-
-                        simpleWindow.setPosition(startPointNew, endPointNew);
-                        System.out.println("Window" + simpleWindow.getTitle() + "is being draged");
-                        requestRepaint();
-                    }
-                }
+               windowManager.handleMouseDragged(x,y,x2,y2);
             }
         }
 

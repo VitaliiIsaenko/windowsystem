@@ -87,6 +87,25 @@ public class WindowManager implements IWindowManager {
         }
     }
 
+    @Override
+    public void handleMouseDragged(int x, int y,int x2, int y2){
+        if (windowSystem.getSimpleWindows().size() > 0) {
+            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(windowSystem.getSimpleWindows().size()-1);
+            // Check if the dragged coordinates are in the window
+            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
+                Point startPointNew = new Point(windowSystem, simpleWindow.getStartPoint().getX() + x2,
+                        simpleWindow.getStartPoint().getY() + y2);
+                Point endPointNew = new Point(windowSystem, simpleWindow.getEndPoint().getX() + x2,
+                        simpleWindow.getEndPoint().getY() + y2);
+
+                simpleWindow.setPosition(startPointNew, endPointNew);
+                System.out.println("Window" + simpleWindow.getTitle() + "is being draged");
+                windowSystem.requestRepaint();
+            }
+        }
+    }
+
     public void addSimpleWindow(int width, int height, String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
