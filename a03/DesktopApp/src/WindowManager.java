@@ -9,7 +9,7 @@ public class WindowManager implements IWindowManager {
     }
 
     private void addTitleBars(int i) {
-        }
+    }
 
     private void addCloseButtons(int i) {
 //        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
@@ -43,7 +43,7 @@ public class WindowManager implements IWindowManager {
     }
 
     @Override
-    public void handleMouseClicked(int x, int y){
+    public void handleMouseClicked(int x, int y) {
 //        for (int i = windowSystem.getSimpleWindows().size() - 1; i >= 0; i--) {
 //            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
 //            if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
@@ -69,7 +69,7 @@ public class WindowManager implements IWindowManager {
     }
 
     @Override
-    public void handleMouseDragged(int x, int y,int x2, int y2){
+    public void handleMouseDragged(int x, int y, int x2, int y2) {
 //        if (windowSystem.getSimpleWindows().size() > 0) {
 //            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(windowSystem.getSimpleWindows().size()-1);
 //            // Check if the dragged coordinates are in the window
@@ -87,14 +87,22 @@ public class WindowManager implements IWindowManager {
 //        }
     }
 
-    public void addSimpleWindow(int width, int height) {
+    public void addSimpleWindow(int width, int height, String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
         Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
                 (windowSystem.getSimpleWindows().size() + 1) * 30);
         Point endPoint = new Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
-        windowSystem.addSimpleWindow(new SimpleWindow(windowSystem, new Coordinates(startPoint, endPoint), Color.BLACK));
+        Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
+
+        AbstractSimpleWindow simpleWindow = new CloseWindow(
+                new TitleBar(
+                        new SimpleWindow(windowSystem, simpleWindowCoordinates, Color.BLACK),
+                        Color.WHITE, Color.CYAN, Color.BLACK, title),
+                Color.RED, Color.BLACK);
+
+        windowSystem.addSimpleWindow(simpleWindow);
     }
 
     public void dragWindow() {

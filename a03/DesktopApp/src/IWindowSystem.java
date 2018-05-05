@@ -9,4 +9,5 @@ public interface IWindowSystem {
     int getHeight();
     int getWidth();
     void drawString(String string, Point point);
+    void drawLine(Coordinates coordinates);
 }

@@ -2,7 +2,7 @@ import java.awt.*;
 
 public abstract class AbstractSimpleWindow {
     private Color color;
-    public abstract void draw();
+    public abstract void apply();
     private IWindowSystem windowSystem;
     private AbstractSimpleWindow simpleWindow;
     private int id;
@@ -42,7 +42,5 @@ public abstract class AbstractSimpleWindow {
         return color;
     }
 
-    public AbstractSimpleWindow getSimpleWindow() {
-        return simpleWindow;
-    }
+    abstract public AbstractSimpleWindow getSimpleWindow();
 }

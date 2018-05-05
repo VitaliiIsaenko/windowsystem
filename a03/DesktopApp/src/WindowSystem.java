@@ -50,7 +50,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      *
      * @param simpleWindow window to add
      */
-    public int addSimpleWindow(SimpleWindow simpleWindow) {
+    public int addSimpleWindow(AbstractSimpleWindow simpleWindow) {
         simpleWindow.setId(getNextWindowId());
         simpleWindows.add(simpleWindow);
         return simpleWindow.getId();
@@ -110,7 +110,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
 
         for (int i = 0; i < simpleWindows.size(); i++) {
             AbstractSimpleWindow simpleWindow = simpleWindows.get(i);
-            simpleWindow.draw();
+            simpleWindow.apply();
 //            windowManager.decorateWindow(i);
         }
 

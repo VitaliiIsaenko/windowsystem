@@ -1,30 +1,38 @@
 import java.awt.*;
 
 public class TitleBar extends TitleBarDecorator {
-    public TitleBar(SimpleWindow simpleWindow, Coordinates coordinates, Color color, String title) {
-        super(simpleWindow, coordinates, color, title);
+    public TitleBar(SimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
+        super(simpleWindow, color, activeColor, textColor, title);
     }
 
     @Override
-    public void draw() {
+    public void apply() {
+        getSimpleWindow().apply();
+
         IWindowSystem ws = getSimpleWindow().getWindowSystem();
-        Coordinates titleCoordinates = getCoordinates();
+
+        Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
+        Point titleEndPoint = new Point(ws,
+                getSimpleWindow().getCoordinates().getEndPoint().getX(),
+                getSimpleWindow().getCoordinates().getStartPoint().getY() + 15);
+        Coordinates titleCoordinates = new Coordinates(titleStartPoint, titleEndPoint);
+
         // This sets the color of the top bar
         if (getSimpleWindow().getId() == (ws.getSimpleWindows().size() - 1)) {
-            ws.setColor(Color.CYAN);
+            ws.setColor(getActiveColor());
         } else {
-            ws.setColor(Color.white);
+            ws.setColor(getColor());
         }
         // Draw the top bar of the window
         ws.drawRect(titleCoordinates);
         ws.fillRect(titleCoordinates);
 
         // Adding title to the window
-        ws.setColor(Color.BLACK);
-        Point titleStartPoint = new Point(getSimpleWindow().getWindowSystem(),
+        ws.setColor(getTextColor());
+        Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
                 titleCoordinates.getStartPoint().getX(),
                 titleCoordinates.getStartPoint().getY() + 10);
-        ws.drawString(getTitle(), titleStartPoint);
+        ws.drawString(getTitle(), titleTextStartPoint);
 
     }
 }

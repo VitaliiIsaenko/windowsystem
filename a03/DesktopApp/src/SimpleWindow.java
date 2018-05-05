@@ -8,7 +8,12 @@ public class SimpleWindow extends AbstractSimpleWindow {
         super(windowSystem, coordinates, color);
     }
 
-    public void draw() {
+    @Override
+    public AbstractSimpleWindow getSimpleWindow() {
+        return this;
+    }
+
+    public void apply() {
         getWindowSystem().setColor(getColor());
         getWindowSystem().drawRect(getCoordinates());
         getWindowSystem().fillRect(getCoordinates());
