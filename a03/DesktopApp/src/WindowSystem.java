@@ -1,12 +1,9 @@
-package com.company;
-
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 import java.awt.*;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 
 /**
  * Window system. Has responsibilities for managing windows
@@ -65,7 +62,7 @@ public class WindowSystem extends GraphicsEventSystem {
      * @param id identficator of window to remove
      */
     public void removeSimpleWindow(int id) {
-        simpleWindows.remove(getWindowById(id));
+        simpleWindows.remove(findSimpleWindow(id));
     }
 
     /**
@@ -75,7 +72,14 @@ public class WindowSystem extends GraphicsEventSystem {
      * @return found simple window or null if not found
      */
     public SimpleWindow findSimpleWindow(int id) {
-        return getWindowById(id);
+        SimpleWindow foundWindow = null;
+        for (SimpleWindow simpleWindow :
+                simpleWindows) {
+            if (simpleWindow.getId() == id) {
+                foundWindow = simpleWindow;
+            }
+        }
+        return foundWindow;
     }
 
     /**
@@ -97,11 +101,6 @@ public class WindowSystem extends GraphicsEventSystem {
     public List<SimpleWindow> getMinimisedSimpleWindows() {
         return minimisedSimpleWindows;
     }
-
-    public void setMinimisedSimpleWindows(List<SimpleWindow> minimisedSimpleWindows) {
-        this.minimisedSimpleWindows = minimisedSimpleWindows;
-    }
-
 
     /**
      * Paints window system
@@ -165,19 +164,21 @@ public class WindowSystem extends GraphicsEventSystem {
                 windowManager.handleMouseDragged(x,y,x2,y2);
             }
         }
-
     }
 
+    public void drawRect(Coordinates coordinates) {
+        drawRect(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
+                coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
+    }
 
-    private SimpleWindow getWindowById(int id) {
-        SimpleWindow foundWindow = null;
-        for (SimpleWindow simpleWindow :
-                simpleWindows) {
-            if (simpleWindow.getId() == id) {
-                foundWindow = simpleWindow;
-            }
-        }
-        return foundWindow;
+    public void fillRect(Coordinates coordinates) {
+        fillRect(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
+                coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
+    }
+
+    public void drawLine(Coordinates coordinates) {
+        drawLine(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
+                coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
     private int getNextWindowId() {
