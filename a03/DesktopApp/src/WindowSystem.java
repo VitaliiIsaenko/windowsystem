@@ -162,7 +162,7 @@ public class WindowSystem extends GraphicsEventSystem {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
-               windowManager.handleMouseDragged(x,y,x2,y2);
+                windowManager.handleMouseDragged(x,y,x2,y2);
             }
         }
 
