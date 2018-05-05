@@ -1,5 +1,8 @@
 package windowsystem;
 
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
+
 import java.awt.*;
 
 public abstract class AbstractSimpleWindow implements Observer {

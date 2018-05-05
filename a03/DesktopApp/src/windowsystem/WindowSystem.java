@@ -1,6 +1,8 @@
 package windowsystem;
 
 import de.rwth.hci.Graphics.GraphicsEventSystem;
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -158,7 +160,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
-                windowManager.handleMouseDragged(x, y, x2, y2);
+                windowManager.handleMouseDragged(new Point(this, x,y), new Point(this,x2,y2));
             }
         }
     }
@@ -178,7 +180,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
-    public void drawString(String text, Point startingPoint){
+    public void drawString(String text, windowsystem.coordinates.Point startingPoint){
         drawString(text, startingPoint.getX(), startingPoint.getY());
     }
 

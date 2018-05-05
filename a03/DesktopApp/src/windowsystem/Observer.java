@@ -1,5 +1,8 @@
 package windowsystem;
 
+import windowsystem.coordinates.Point;
+
 public interface Observer {
-    void react(Point point);
+    void react(Point clickedPoint);
+    void react(Point clickedPoint, Point toMove);
 }

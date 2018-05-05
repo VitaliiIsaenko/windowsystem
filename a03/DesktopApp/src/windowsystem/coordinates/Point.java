@@ -1,4 +1,6 @@
-package windowsystem;
+package windowsystem.coordinates;
+
+import windowsystem.IWindowSystem;
 
 public class Point {
     private final IWindowSystem contextWindowSystem;
@@ -9,7 +11,7 @@ public class Point {
     public Point(IWindowSystem contextWindowSystem, int x, int y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > contextWindowSystem.getWidth() || y < 0 || y > contextWindowSystem.getHeight()) {
-            throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
+//            throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
         }
         this.x = (float) x / contextWindowSystem.getWidth();
         this.y = (float) y / contextWindowSystem.getHeight();

@@ -1,5 +1,8 @@
 package windowsystem;
 
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
+
 import java.awt.*;
 
 /**
@@ -16,8 +19,12 @@ public class SimpleWindow extends AbstractSimpleWindow {
         getWindowSystem().fillRect(getCoordinates());
     }
 
-    @Override
-    public void react(Point point) {
 
+    @Override
+    public void react(Point clickedPoint) {
+    }
+
+    @Override
+    public void react(Point clickedPoint, Point toMove) {
     }
 }

@@ -1,4 +1,4 @@
-package windowsystem;
+package windowsystem.coordinates;
 
 public class Coordinates {
 

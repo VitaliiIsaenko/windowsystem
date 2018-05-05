@@ -1,7 +1,8 @@
 package windowsystem.decorators;
 
 import windowsystem.*;
-import windowsystem.Point;
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
@@ -38,4 +39,8 @@ public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
         this.coordinates = coordinates;
     }
 
+    @Override
+    public void react(Point clickedPoint, Point toMove) {
+        getSimpleWindow().react(clickedPoint, toMove);
+    }
 }

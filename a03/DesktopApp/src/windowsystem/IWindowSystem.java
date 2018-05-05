@@ -1,5 +1,8 @@
 package windowsystem;
 
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
+
 import java.awt.*;
 import java.util.List;
 

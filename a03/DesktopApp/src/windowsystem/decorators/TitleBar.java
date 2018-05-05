@@ -1,7 +1,8 @@
 package windowsystem.decorators;
 
 import windowsystem.*;
-import windowsystem.Point;
+import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
@@ -16,11 +17,11 @@ public class TitleBar extends TitleBarDecorator {
 
         IWindowSystem ws = getSimpleWindow().getWindowSystem();
 
-        windowsystem.Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
-        windowsystem.Point titleEndPoint = new windowsystem.Point(ws,
+        windowsystem.coordinates.Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
+        windowsystem.coordinates.Point titleEndPoint = new windowsystem.coordinates.Point(ws,
                 getSimpleWindow().getCoordinates().getEndPoint().getX(),
                 getSimpleWindow().getCoordinates().getStartPoint().getY() + 15);
-        Coordinates titleCoordinates = new Coordinates(titleStartPoint, titleEndPoint);
+        setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
 
         // This sets the color of the top bar
         if (getSimpleWindow().getId() == (ws.getSimpleWindows().size() - 1)) {
@@ -29,20 +30,30 @@ public class TitleBar extends TitleBarDecorator {
             ws.setColor(getColor());
         }
         // Draw the top bar of the window
-        ws.drawRect(titleCoordinates);
-        ws.fillRect(titleCoordinates);
+        ws.drawRect(getCoordinates());
+        ws.fillRect(getCoordinates());
 
         // Adding title to the window
         ws.setColor(getTextColor());
-        windowsystem.Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
-                titleCoordinates.getStartPoint().getX(),
-                titleCoordinates.getStartPoint().getY() + 10);
+        Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
+                getCoordinates().getStartPoint().getX(),
+                getCoordinates().getStartPoint().getY() + 10);
         ws.drawString(getTitle(), titleTextStartPoint);
 
     }
 
     @Override
-    public void react(Point point) {
-        getSimpleWindow().react(point);
+    public void react(Point clickedPoint, Point toMove) {
+        if (getCoordinates().contains(clickedPoint)) {
+            int newStartX = getSimpleWindow().getCoordinates().getStartPoint().getX() + toMove.getX();
+            int newStartY = getSimpleWindow().getCoordinates().getStartPoint().getY() + toMove.getY();
+            int newEndX = getSimpleWindow().getCoordinates().getEndPoint().getX() + toMove.getX();
+            int newEndY = getSimpleWindow().getCoordinates().getEndPoint().getY() + toMove.getY();
+            getSimpleWindow().setCoordinates(new Coordinates(
+                    new Point(getWindowSystem(), newStartX, newStartY),
+                    new Point(getWindowSystem(), newEndX, newEndY)
+            ));
+        }
+
     }
 }
