@@ -1,10 +1,13 @@
 package windowsystem.decorators;
 
 import windowsystem.*;
+import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TitleBar extends TitleBarDecorator {
     public TitleBar(AbstractSimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
@@ -12,8 +15,8 @@ public class TitleBar extends TitleBarDecorator {
     }
 
     @Override
-    public void apply() {
-        getSimpleWindow().apply();
+    public void draw() {
+        getSimpleWindow().draw();
 
         IWindowSystem ws = getSimpleWindow().getWindowSystem();
 
@@ -24,7 +27,7 @@ public class TitleBar extends TitleBarDecorator {
         setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
 
         // This sets the color of the top bar
-        if (getSimpleWindow().getId() == (ws.getSimpleWindows().size() - 1)) {
+        if (getSimpleWindow().getId() == (ws.getSimpleWindows().size())) {
             ws.setColor(getActiveColor());
         } else {
             ws.setColor(getColor());
@@ -54,6 +57,23 @@ public class TitleBar extends TitleBarDecorator {
                     new Point(getWindowSystem(), newEndX, newEndY)
             ));
         }
+    }
 
+    @Override
+    public void react(Point clickedPoint) {
+        if (getCoordinates().contains(clickedPoint)) {
+            List<AbstractSimpleWindow> simpleWindows = new LinkedList<>(getWindowSystem().getSimpleWindows());
+            getWindowSystem().getSimpleWindows().removeAll(simpleWindows);
+
+            AbstractSimpleWindow currentSimpleWindow = null;
+            for (AbstractSimpleWindow sw : simpleWindows) {
+                if (sw.getId() == this.getId()) {
+                    currentSimpleWindow = sw;
+                } else {
+                    getWindowSystem().addSimpleWindow(sw);
+                }
+            }
+            getWindowSystem().addSimpleWindow(currentSimpleWindow);
+        }
     }
 }

@@ -1,5 +1,6 @@
-package windowsystem;
+package windowsystem.contracts;
 
+import windowsystem.AbstractSimpleWindow;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 

@@ -60,7 +60,12 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow {
     }
 
     @Override
-    public void react(Point clickedPoint) {
-        getSimpleWindow().react(clickedPoint);
+    public int getId() {
+        return getSimpleWindow().getId();
+    }
+
+    @Override
+    public void setId(int id) {
+        getSimpleWindow().setId(id);
     }
 }

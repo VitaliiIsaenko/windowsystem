@@ -1,4 +1,4 @@
-package windowsystem;
+package windowsystem.contracts;
 
 import windowsystem.coordinates.Point;
 

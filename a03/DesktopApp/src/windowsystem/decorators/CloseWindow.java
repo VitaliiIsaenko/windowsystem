@@ -1,6 +1,7 @@
 package windowsystem.decorators;
 
 import windowsystem.*;
+import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
@@ -12,8 +13,8 @@ public class CloseWindow extends CloseWindowDecorator {
     }
 
     @Override
-    public void apply() {
-        getSimpleWindow().apply();
+    public void draw() {
+        getSimpleWindow().draw();
 
         IWindowSystem ws = getWindowSystem();
         AbstractSimpleWindow simpleWindow = getSimpleWindow();
@@ -37,8 +38,10 @@ public class CloseWindow extends CloseWindowDecorator {
 
     @Override
     public void react(Point point) {
-        if (getCoordinates().contains(point)){
+        if (getCoordinates().contains(point)) {
             getWindowSystem().removeSimpleWindow(getId());
+        } else {
+            getSimpleWindow().react(point);
         }
     }
 

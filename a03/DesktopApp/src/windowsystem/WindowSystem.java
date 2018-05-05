@@ -1,6 +1,8 @@
 package windowsystem;
 
 import de.rwth.hci.Graphics.GraphicsEventSystem;
+import windowsystem.contracts.IWindowManager;
+import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
@@ -113,7 +115,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
 
         for (int i = 0; i < simpleWindows.size(); i++) {
             AbstractSimpleWindow simpleWindow = simpleWindows.get(i);
-            simpleWindow.apply();
+            simpleWindow.draw();
 //            windowManager.decorateWindow(i);
         }
 

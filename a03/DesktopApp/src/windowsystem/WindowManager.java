@@ -1,5 +1,7 @@
 package windowsystem;
 
+import windowsystem.contracts.IWindowManager;
+import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 import windowsystem.decorators.CloseWindow;
@@ -15,23 +17,6 @@ public class WindowManager implements IWindowManager {
         windowSystem.setWindowManager(this);
     }
 
-    private void addTitleBars(int i) {
-    }
-
-    private void addCloseButtons(int i) {
-//        windowsystem.SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-//        // Adding close button to the window
-//        windowsystem.coordinates.Point exitStartPoint = new windowsystem.coordinates.Point(windowSystem, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
-//        windowsystem.coordinates.Point exitEndPoint = new windowsystem.coordinates.Point(windowSystem, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
-//        windowSystem.setColor(Color.RED);
-//        windowSystem.drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-//        windowSystem.fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-//
-//        windowSystem.setColor(Color.BLACK);
-//        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-//        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
-    }
-
     private void addMinimiseButtons(int i) {
 //        windowsystem.SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
 //        // Adding minimise button to the window
@@ -43,17 +28,9 @@ public class WindowManager implements IWindowManager {
     }
 
     @Override
-    public void decorateWindow(int i) {
-//        addTitleBars(i);
-//        addCloseButtons(i);
-//        addMinimiseButtons(i);
-    }
-
-    @Override
-    public void handleMouseClicked(windowsystem.coordinates.Point point) {
-        for (AbstractSimpleWindow sw :
-                windowSystem.getSimpleWindows()) {
-            sw.react(point);
+    public void handleMouseClicked(Point point) {
+        for (int i = 0; i < windowSystem.getSimpleWindows().size(); i++) {
+            windowSystem.getSimpleWindows().get(i).react(point);
 
         }
         windowSystem.requestRepaint();
@@ -84,36 +61,18 @@ public class WindowManager implements IWindowManager {
 
     @Override
     public void handleMouseDragged(Point clickedPoint, Point toMove) {
-        for (AbstractSimpleWindow sw :
-                windowSystem.getSimpleWindows()) {
-            sw.react(clickedPoint, toMove);
-            windowSystem.requestRepaint();
+        for (int i = 0; i < windowSystem.getSimpleWindows().size(); i++) {
+            windowSystem.getSimpleWindows().get(i).react(clickedPoint, toMove);
 
         }
-
-
-//        if (windowSystem.getSimpleWindows().size() > 0) {
-//            windowsystem.SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(windowSystem.getSimpleWindows().size()-1);
-//            // Check if the dragged coordinates are in the window
-//            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-//                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
-//                windowsystem.coordinates.Point startPointNew = new windowsystem.coordinates.Point(windowSystem, simpleWindow.getStartPoint().getX() + x2,
-//                        simpleWindow.getStartPoint().getY() + y2);
-//                windowsystem.coordinates.Point endPointNew = new windowsystem.coordinates.Point(windowSystem, simpleWindow.getEndPoint().getX() + x2,
-//                        simpleWindow.getEndPoint().getY() + y2);
-//
-//                simpleWindow.setPosition(startPointNew, endPointNew);
-//                System.out.println("Window" + simpleWindow.getTitle() + "is being draged");
-//                windowSystem.requestRepaint();
-//            }
-//        }
+        windowSystem.requestRepaint();
     }
 
     public void addSimpleWindow(int width, int height, String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
-        windowsystem.coordinates.Point startPoint = new windowsystem.coordinates.Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
+        Point startPoint = new windowsystem.coordinates.Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
                 (windowSystem.getSimpleWindows().size() + 1) * 30);
         Point endPoint = new windowsystem.coordinates.Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
         Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
@@ -125,9 +84,5 @@ public class WindowManager implements IWindowManager {
                 Color.RED, Color.BLACK);
 
         windowSystem.addSimpleWindow(simpleWindow);
-    }
-
-    public void dragWindow() {
-
     }
 }

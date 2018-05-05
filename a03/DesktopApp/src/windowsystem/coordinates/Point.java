@@ -1,10 +1,9 @@
 package windowsystem.coordinates;
 
-import windowsystem.IWindowSystem;
+import windowsystem.contracts.IWindowSystem;
 
 public class Point {
     private final IWindowSystem contextWindowSystem;
-
     private float x;
     private float y;
 
