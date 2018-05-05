@@ -73,8 +73,7 @@ public class WindowSystem extends GraphicsEventSystem {
      */
     public SimpleWindow findSimpleWindow(int id) {
         SimpleWindow foundWindow = null;
-        for (SimpleWindow simpleWindow :
-                simpleWindows) {
+        for (SimpleWindow simpleWindow : simpleWindows) {
             if (simpleWindow.getId() == id) {
                 foundWindow = simpleWindow;
             }
@@ -109,23 +108,20 @@ public class WindowSystem extends GraphicsEventSystem {
     protected void handlePaint() {
         setBackground(Color.PINK);
 
-        for (int i = 0; i < simpleWindows.size(); i++){
+        for (int i = 0; i < simpleWindows.size(); i++) {
             SimpleWindow simpleWindow = simpleWindows.get(i);
-            setColor(simpleWindow.getFilledColor());
-            drawRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
-            fillRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
-
+            simpleWindow.draw();
             windowManager.decorateWindow(i);
         }
 
-        for (int i = 0;i < minimisedSimpleWindows.size();i++){
+        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
             SimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
             setColor(Color.GREEN);
 
-            drawRect(50 * i + 10,550,50 * i + 50,580);
-            fillRect(50 * i + 10,550,50 * i + 50,580);
+            drawRect(50 * i + 10, 550, 50 * i + 50, 580);
+            fillRect(50 * i + 10, 550, 50 * i + 50, 580);
             setColor(Color.WHITE);
-            drawString(Integer.toString(i),50 * i + 13,565);
+            drawString(Integer.toString(i), 50 * i + 13, 565);
         }
 
     }
@@ -135,11 +131,11 @@ public class WindowSystem extends GraphicsEventSystem {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
         System.out.println(simpleWindows);
 
-        windowManager.handleMouseClicked(x,y);
+        windowManager.handleMouseClicked(x, y);
 
-        for (int i = 0; i < minimisedSimpleWindows.size();i++){
+        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
             SimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
-            if(x > (50 * i  + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
+            if (x > (50 * i + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
                 System.out.println("Maximised Window");
                 simpleWindows.add(simpleWindow);
                 minimisedSimpleWindows.remove(simpleWindow);
@@ -161,7 +157,7 @@ public class WindowSystem extends GraphicsEventSystem {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
-                windowManager.handleMouseDragged(x,y,x2,y2);
+                windowManager.handleMouseDragged(x, y, x2, y2);
             }
         }
     }
@@ -179,6 +175,10 @@ public class WindowSystem extends GraphicsEventSystem {
     public void drawLine(Coordinates coordinates) {
         drawLine(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
+    }
+
+    public void drawString(String text, Point startingPoint){
+        drawString(text, startingPoint.getX(), startingPoint.getY());
     }
 
     private int getNextWindowId() {

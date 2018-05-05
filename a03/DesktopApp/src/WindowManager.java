@@ -10,8 +10,8 @@ public class WindowManager implements IWindowManager {
 
     private void addTitleBars(int i) {
         SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-        Point titleStartPoint = simpleWindow.getStartPoint();
-        Point titleEndPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
+        Coordinates titleCoordinates = new Coordinates(simpleWindow.getCoordinates().getStartPoint(),
+                new Point(windowSystem, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15));
 
         // This sets the color of the top bar
         if (i == (windowSystem.getSimpleWindows().size() - 1)) {
@@ -20,88 +20,88 @@ public class WindowManager implements IWindowManager {
             windowSystem.setColor(Color.white);
         }
         // Draw the top bar of the window
-        windowSystem.drawRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
-        windowSystem.fillRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
+        windowSystem.drawRect(titleCoordinates);
+        windowSystem.fillRect(titleCoordinates);
 
         // Adding title to the window
         windowSystem.setColor(Color.BLACK);
-        windowSystem.drawString(simpleWindow.getTitle(), titleStartPoint.getX(), titleStartPoint.getY() + 10);
+        windowSystem.drawString(simpleWindow.getTitle(), titleCoordinates.getStartPoint().getX(), titleCoordinates.getStartPoint().getY() + 10);
     }
 
     private void addCloseButtons(int i) {
-        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-        // Adding close button to the window
-        Point exitStartPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
-        Point exitEndPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
-        windowSystem.setColor(Color.RED);
-        windowSystem.drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-        windowSystem.fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-
-        windowSystem.setColor(Color.BLACK);
-        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
+//        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
+//        // Adding close button to the window
+//        Point exitStartPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
+//        Point exitEndPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
+//        windowSystem.setColor(Color.RED);
+//        windowSystem.drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+//        windowSystem.fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+//
+//        windowSystem.setColor(Color.BLACK);
+//        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
+//        windowSystem.drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
     }
 
     private void addMinimiseButtons(int i) {
-        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-        // Adding minimise button to the window
-        Point minStartPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 30, simpleWindow.getStartPoint().getY());
-        Point minEndPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY() + 15);
-        windowSystem.setColor(Color.GREEN);
-        windowSystem.drawRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
-        windowSystem.fillRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
+//        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
+//        // Adding minimise button to the window
+//        Point minStartPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 30, simpleWindow.getStartPoint().getY());
+//        Point minEndPoint = new Point(windowSystem, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY() + 15);
+//        windowSystem.setColor(Color.GREEN);
+//        windowSystem.drawRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
+//        windowSystem.fillRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
     }
 
     @Override
     public void decorateWindow(int i) {
-        addTitleBars(i);
-        addCloseButtons(i);
-        addMinimiseButtons(i);
+//        addTitleBars(i);
+//        addCloseButtons(i);
+//        addMinimiseButtons(i);
     }
 
     @Override
     public void handleMouseClicked(int x, int y){
-        for (int i = windowSystem.getSimpleWindows().size() - 1; i >= 0; i--) {
-            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-            if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " closed");
-                windowSystem.getSimpleWindows().remove(i);
-                windowSystem.requestRepaint();
-            } else if(x > simpleWindow.getEndPoint().getX() - 30 && x < simpleWindow.getEndPoint().getX() - 15
-                    && y > simpleWindow.getStartPoint().getY() && y < simpleWindow.getStartPoint().getY() + 15) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " minimised");
-                windowSystem.getMinimisedSimpleWindows().add(simpleWindow);
-                windowSystem.getSimpleWindows().remove(simpleWindow);
-                windowSystem.requestRepaint();
-            } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " clicked at x:" + x + " - y:" + y);
-                windowSystem.getSimpleWindows().remove(i);
-                windowSystem.getSimpleWindows().add(simpleWindow);
-                windowSystem.requestRepaint();
-                break;
-            }
-        }
+//        for (int i = windowSystem.getSimpleWindows().size() - 1; i >= 0; i--) {
+//            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
+//            if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
+//                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15) {
+//                System.out.println("Window: " + simpleWindow.getTitle() + " closed");
+//                windowSystem.getSimpleWindows().remove(i);
+//                windowSystem.requestRepaint();
+//            } else if(x > simpleWindow.getEndPoint().getX() - 30 && x < simpleWindow.getEndPoint().getX() - 15
+//                    && y > simpleWindow.getStartPoint().getY() && y < simpleWindow.getStartPoint().getY() + 15) {
+//                System.out.println("Window: " + simpleWindow.getTitle() + " minimised");
+//                windowSystem.getMinimisedSimpleWindows().add(simpleWindow);
+//                windowSystem.getSimpleWindows().remove(simpleWindow);
+//                windowSystem.requestRepaint();
+//            } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+//                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
+//                System.out.println("Window: " + simpleWindow.getTitle() + " clicked at x:" + x + " - y:" + y);
+//                windowSystem.getSimpleWindows().remove(i);
+//                windowSystem.getSimpleWindows().add(simpleWindow);
+//                windowSystem.requestRepaint();
+//                break;
+//            }
+//        }
     }
 
     @Override
     public void handleMouseDragged(int x, int y,int x2, int y2){
-        if (windowSystem.getSimpleWindows().size() > 0) {
-            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(windowSystem.getSimpleWindows().size()-1);
-            // Check if the dragged coordinates are in the window
-            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
-                Point startPointNew = new Point(windowSystem, simpleWindow.getStartPoint().getX() + x2,
-                        simpleWindow.getStartPoint().getY() + y2);
-                Point endPointNew = new Point(windowSystem, simpleWindow.getEndPoint().getX() + x2,
-                        simpleWindow.getEndPoint().getY() + y2);
-
-                simpleWindow.setPosition(startPointNew, endPointNew);
-                System.out.println("Window" + simpleWindow.getTitle() + "is being draged");
-                windowSystem.requestRepaint();
-            }
-        }
+//        if (windowSystem.getSimpleWindows().size() > 0) {
+//            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(windowSystem.getSimpleWindows().size()-1);
+//            // Check if the dragged coordinates are in the window
+//            if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+//                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
+//                Point startPointNew = new Point(windowSystem, simpleWindow.getStartPoint().getX() + x2,
+//                        simpleWindow.getStartPoint().getY() + y2);
+//                Point endPointNew = new Point(windowSystem, simpleWindow.getEndPoint().getX() + x2,
+//                        simpleWindow.getEndPoint().getY() + y2);
+//
+//                simpleWindow.setPosition(startPointNew, endPointNew);
+//                System.out.println("Window" + simpleWindow.getTitle() + "is being draged");
+//                windowSystem.requestRepaint();
+//            }
+//        }
     }
 
     public void addSimpleWindow(int width, int height, String title) {
@@ -111,7 +111,7 @@ public class WindowManager implements IWindowManager {
         Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
                 (windowSystem.getSimpleWindows().size() + 1) * 30);
         Point endPoint = new Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
-        windowSystem.addSimpleWindow(new SimpleWindow(startPoint, endPoint, Color.BLACK, title));
+        windowSystem.addSimpleWindow(new SimpleWindow(windowSystem, new Coordinates(startPoint, endPoint), Color.BLACK, title));
     }
 
     public void dragWindow() {

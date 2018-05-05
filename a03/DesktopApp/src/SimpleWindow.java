@@ -4,22 +4,26 @@ import java.awt.*;
  * Window representation
  */
 public class SimpleWindow {
+    private WindowSystem windowSystem;
+    private SimpleWindow simpleWindow;
     private int id;
-    private Point startPoint;
-    private Point endPoint;
+    private Coordinates coordinates;
     private String title;
     private Color filledColor;
 
-    public SimpleWindow(Point startPoint, Point endPoint, Color filledColor,String title) {
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+    public SimpleWindow(WindowSystem windowSystem, Coordinates coordinates, Color filledColor,String title) {
+        this.coordinates = coordinates;
+        this.windowSystem = windowSystem;
         this.filledColor = filledColor;
         this.title = title;
     }
 
-    public void setPosition(Point startPoint,Point endPoint){
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public Color getFilledColor() {
@@ -38,28 +42,18 @@ public class SimpleWindow {
         this.id = id;
     }
 
-
-    public Point getStartPoint() {
-        return startPoint;
-    }
-
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
-    }
-
-    public Point getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void draw() {
+        windowSystem.setColor(filledColor);
+        windowSystem.drawRect(coordinates);
+        windowSystem.fillRect(coordinates);
+        windowSystem.drawString(title, coordinates.getStartPoint());
     }
 }
