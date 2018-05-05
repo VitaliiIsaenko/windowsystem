@@ -1,3 +1,5 @@
+package windowsystem;
+
 import java.awt.*;
 import java.util.List;
 
@@ -10,4 +12,7 @@ public interface IWindowSystem {
     int getWidth();
     void drawString(String string, Point point);
     void drawLine(Coordinates coordinates);
+    void removeSimpleWindow(int id);
+    int addSimpleWindow(AbstractSimpleWindow simpleWindow);
+    void requestRepaint();
 }

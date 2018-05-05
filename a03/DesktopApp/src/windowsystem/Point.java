@@ -1,3 +1,5 @@
+package windowsystem;
+
 public class Point {
     private final IWindowSystem contextWindowSystem;
 

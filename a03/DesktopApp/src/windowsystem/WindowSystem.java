@@ -1,7 +1,8 @@
+package windowsystem;
+
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 import java.awt.*;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -131,17 +132,17 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
         System.out.println(simpleWindows);
 
-        windowManager.handleMouseClicked(x, y);
+        windowManager.handleMouseClicked(new Point(this,x, y));
 
-        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-            AbstractSimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
-            if (x > (50 * i + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
-                System.out.println("Maximised Window");
-                simpleWindows.add(simpleWindow);
-                minimisedSimpleWindows.remove(simpleWindow);
-                requestRepaint();
-            }
-        }
+//        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
+//            AbstractSimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
+//            if (x > (50 * i + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
+//                System.out.println("Maximised Window");
+//                simpleWindows.add(simpleWindow);
+//                minimisedSimpleWindows.remove(simpleWindow);
+//                requestRepaint();
+//            }
+//        }
     }
 
 
@@ -185,6 +186,6 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         int maxId = simpleWindows.stream().map(simpleWindow -> simpleWindow.getId())
                 .mapToInt(id -> id)
                 .max().orElse(0);
-        return maxId;
+        return maxId + 1;
     }
 }

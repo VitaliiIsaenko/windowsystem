@@ -1,3 +1,5 @@
+package windowsystem;
+
 public class Coordinates {
 
     private Point startPoint;
@@ -22,5 +24,14 @@ public class Coordinates {
 
     public void setEndPoint(Point endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public boolean contains(Point point) {
+        boolean contains = false;
+        if (getStartPoint().getX() < point.getX() && point.getX() < getEndPoint().getX() &&
+                getStartPoint().getY() < point.getY() && point.getY() < getEndPoint().getY()) {
+            contains = true;
+        }
+        return contains;
     }
 }

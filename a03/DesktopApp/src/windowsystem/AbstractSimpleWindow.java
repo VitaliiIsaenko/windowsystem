@@ -1,10 +1,13 @@
+package windowsystem;
+
 import java.awt.*;
 
-public abstract class AbstractSimpleWindow {
+public abstract class AbstractSimpleWindow implements Observer {
     private Color color;
+
     public abstract void apply();
+
     private IWindowSystem windowSystem;
-    private AbstractSimpleWindow simpleWindow;
     private int id;
     private Coordinates coordinates;
 
@@ -41,6 +44,4 @@ public abstract class AbstractSimpleWindow {
     public Color getColor() {
         return color;
     }
-
-    abstract public AbstractSimpleWindow getSimpleWindow();
 }
