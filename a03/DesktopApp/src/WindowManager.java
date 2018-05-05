@@ -9,24 +9,7 @@ public class WindowManager implements IWindowManager {
     }
 
     private void addTitleBars(int i) {
-        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
-        Coordinates titleCoordinates = new Coordinates(simpleWindow.getCoordinates().getStartPoint(),
-                new Point(windowSystem, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15));
-
-        // This sets the color of the top bar
-        if (i == (windowSystem.getSimpleWindows().size() - 1)) {
-            windowSystem.setColor(Color.CYAN);
-        } else {
-            windowSystem.setColor(Color.white);
         }
-        // Draw the top bar of the window
-        windowSystem.drawRect(titleCoordinates);
-        windowSystem.fillRect(titleCoordinates);
-
-        // Adding title to the window
-        windowSystem.setColor(Color.BLACK);
-        windowSystem.drawString(simpleWindow.getTitle(), titleCoordinates.getStartPoint().getX(), titleCoordinates.getStartPoint().getY() + 10);
-    }
 
     private void addCloseButtons(int i) {
 //        SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);

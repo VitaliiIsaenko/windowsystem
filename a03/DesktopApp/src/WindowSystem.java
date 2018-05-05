@@ -111,7 +111,7 @@ public class WindowSystem extends GraphicsEventSystem {
         for (int i = 0; i < simpleWindows.size(); i++) {
             SimpleWindow simpleWindow = simpleWindows.get(i);
             simpleWindow.draw();
-            windowManager.decorateWindow(i);
+//            windowManager.decorateWindow(i);
         }
 
         for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
