@@ -1,5 +1,5 @@
 package com.company;
 
 public interface IWindowManager {
-    public void decorateWindows();
+    public void decorateWindow(int i);
 }

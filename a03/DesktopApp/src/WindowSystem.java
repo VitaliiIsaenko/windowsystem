@@ -106,41 +106,7 @@ public class WindowSystem extends GraphicsEventSystem {
             drawRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
             fillRect(simpleWindow.getStartPoint().getX(), simpleWindow.getStartPoint().getY(), simpleWindow.getEndPoint().getX(), simpleWindow.getEndPoint().getY());
 
-            Point titleStartPoint = simpleWindow.getStartPoint();
-            Point titleEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
-
-            // This sets the color of the top bar
-            if (i == (simpleWindows.size() - 1)) {
-                setColor(Color.CYAN);
-            } else {
-                setColor(Color.white);
-            }
-            // Draw the top bar of the window
-            drawRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
-            fillRect(titleStartPoint.getX(), titleStartPoint.getY(), titleEndPoint.getX(), titleEndPoint.getY());
-
-            // Adding title to the window
-            setColor(Color.BLACK);
-            drawString(simpleWindow.getTitle(), titleStartPoint.getX(), titleStartPoint.getY() + 10);
-
-            // Adding close button to the window
-            Point exitStartPoint = new Point(this, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY());
-            Point exitEndPoint = new Point(this, simpleWindow.getEndPoint().getX(), simpleWindow.getStartPoint().getY() + 15);
-            setColor(Color.RED);
-            drawRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-            fillRect(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-
-
-            // Adding minimise button to the window
-            Point minStartPoint = new Point(this, simpleWindow.getEndPoint().getX() - 30, simpleWindow.getStartPoint().getY());
-            Point minEndPoint = new Point(this, simpleWindow.getEndPoint().getX() - 15, simpleWindow.getStartPoint().getY() + 15);
-            setColor(Color.GREEN);
-            drawRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
-            fillRect(minStartPoint.getX(), minStartPoint.getY(), minEndPoint.getX(), minEndPoint.getY());
-
-            setColor(Color.BLACK);
-            drawLine(exitStartPoint.getX(), exitStartPoint.getY(), exitEndPoint.getX(), exitEndPoint.getY());
-            drawLine(exitStartPoint.getX(), exitStartPoint.getY() + 15, exitEndPoint.getX(), exitStartPoint.getY());
+            windowManager.decorateWindow(i);
         }
 
         for (int i = 0;i < minimisedSimpleWindows.size();i++){
