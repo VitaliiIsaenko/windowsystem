@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class WindowSystem extends GraphicsEventSystem {
     private List<SimpleWindow> simpleWindows;
+
     private List<SimpleWindow> minimisedSimpleWindows;
     private IWindowManager windowManager;
 
@@ -93,6 +94,15 @@ public class WindowSystem extends GraphicsEventSystem {
         drawLine(startXCalculated, startYCalculated, endXCalculated, endYCalculated);
     }
 
+    public List<SimpleWindow> getMinimisedSimpleWindows() {
+        return minimisedSimpleWindows;
+    }
+
+    public void setMinimisedSimpleWindows(List<SimpleWindow> minimisedSimpleWindows) {
+        this.minimisedSimpleWindows = minimisedSimpleWindows;
+    }
+
+
     /**
      * Paints window system
      */
@@ -125,28 +135,8 @@ public class WindowSystem extends GraphicsEventSystem {
     public void handleMouseClicked(int x, int y) {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
         System.out.println(simpleWindows);
-        for (int i = simpleWindows.size() - 1; i >= 0; i--) {
-            SimpleWindow simpleWindow = simpleWindows.get(i);
-            if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " closed");
-                simpleWindows.remove(i);
-                requestRepaint();
-            } else if(x > simpleWindow.getEndPoint().getX() - 30 && x < simpleWindow.getEndPoint().getX() - 15
-                    && y > simpleWindow.getStartPoint().getY() && y < simpleWindow.getStartPoint().getY() + 15) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " minimised");
-                minimisedSimpleWindows.add(simpleWindow);
-                simpleWindows.remove(simpleWindow);
-                requestRepaint();
-            } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
-                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
-                System.out.println("Window: " + simpleWindow.getTitle() + " clicked at x:" + x + " - y:" + y);
-                simpleWindows.remove(i);
-                simpleWindows.add(simpleWindow);
-                requestRepaint();
-                break;
-            }
-        }
+
+        windowManager.handleMouseClicked(x,y);
 
         for (int i = 0; i < minimisedSimpleWindows.size();i++){
             SimpleWindow simpleWindow = minimisedSimpleWindows.get(i);

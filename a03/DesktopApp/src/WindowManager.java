@@ -61,6 +61,32 @@ public class WindowManager implements IWindowManager {
         addMinimiseButtons(i);
     }
 
+    @Override
+    public void handleMouseClicked(int x, int y){
+        for (int i = windowSystem.getSimpleWindows().size() - 1; i >= 0; i--) {
+            SimpleWindow simpleWindow = windowSystem.getSimpleWindows().get(i);
+            if (x >= simpleWindow.getEndPoint().getX() - 15 && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getStartPoint().getY() + 15) {
+                System.out.println("Window: " + simpleWindow.getTitle() + " closed");
+                windowSystem.getSimpleWindows().remove(i);
+                windowSystem.requestRepaint();
+            } else if(x > simpleWindow.getEndPoint().getX() - 30 && x < simpleWindow.getEndPoint().getX() - 15
+                    && y > simpleWindow.getStartPoint().getY() && y < simpleWindow.getStartPoint().getY() + 15) {
+                System.out.println("Window: " + simpleWindow.getTitle() + " minimised");
+                windowSystem.getMinimisedSimpleWindows().add(simpleWindow);
+                windowSystem.getSimpleWindows().remove(simpleWindow);
+                windowSystem.requestRepaint();
+            } else if (x >= simpleWindow.getStartPoint().getX() && x <= simpleWindow.getEndPoint().getX()
+                    && y >= simpleWindow.getStartPoint().getY() && y <= simpleWindow.getEndPoint().getY()) {
+                System.out.println("Window: " + simpleWindow.getTitle() + " clicked at x:" + x + " - y:" + y);
+                windowSystem.getSimpleWindows().remove(i);
+                windowSystem.getSimpleWindows().add(simpleWindow);
+                windowSystem.requestRepaint();
+                break;
+            }
+        }
+    }
+
     public void addSimpleWindow(int width, int height, String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
