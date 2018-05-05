@@ -3,11 +3,7 @@ package windowsystem;
 import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
-
 import java.awt.Color;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Window representation

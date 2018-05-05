@@ -34,8 +34,6 @@ public class CloseWindow extends CloseWindowDecorator {
         ws.drawLine(exitLineCoordinates);
     }
 
-
-
     @Override
     public void react(Point point) {
         if (getCoordinates().contains(point)) {

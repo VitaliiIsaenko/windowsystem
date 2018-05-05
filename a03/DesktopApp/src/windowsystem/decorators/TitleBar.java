@@ -56,6 +56,8 @@ public class TitleBar extends TitleBarDecorator {
                     new Point(getWindowSystem(), newStartX, newStartY),
                     new Point(getWindowSystem(), newEndX, newEndY)
             ));
+        } else {
+            getSimpleWindow().react(clickedPoint, toMove);
         }
     }
 
@@ -74,6 +76,8 @@ public class TitleBar extends TitleBarDecorator {
                 }
             }
             getWindowSystem().addSimpleWindow(currentSimpleWindow);
+        } else {
+            getSimpleWindow().react(clickedPoint);
         }
     }
 }

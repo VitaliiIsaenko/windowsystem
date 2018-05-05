@@ -2,8 +2,6 @@ package windowsystem.decorators;
 
 import windowsystem.AbstractSimpleWindow;
 import windowsystem.coordinates.Coordinates;
-import windowsystem.coordinates.Point;
-
 import java.awt.*;
 
 public abstract class TitleBarDecorator extends AbstractSimpleWindow {
@@ -11,7 +9,6 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow {
     private String title;
     private Color textColor;
     private Color activeColor;
-    private Coordinates coordinates;
 
     public TitleBarDecorator(AbstractSimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
         super(simpleWindow.getWindowSystem(), simpleWindow.getCoordinates(), color);
@@ -47,16 +44,6 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow {
 
     public void setActiveColor(Color activeColor) {
         this.activeColor = activeColor;
-    }
-
-    @Override
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    @Override
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
     }
 
     @Override
