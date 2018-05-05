@@ -1,3 +1,8 @@
+package windowsystem.decorators;
+
+import windowsystem.*;
+import windowsystem.Point;
+
 import java.awt.*;
 
 public class CloseWindow extends CloseWindowDecorator {
@@ -12,18 +17,28 @@ public class CloseWindow extends CloseWindowDecorator {
         IWindowSystem ws = getWindowSystem();
         AbstractSimpleWindow simpleWindow = getSimpleWindow();
         // Adding close button to the window
-        Point exitStartPoint = new Point(ws, simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
-        Point exitEndPoint = new Point(ws, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
-        Coordinates exitCoordinates = new Coordinates(exitStartPoint, exitEndPoint);
+        windowsystem.Point exitStartPoint = new windowsystem.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
+        windowsystem.Point exitEndPoint = new windowsystem.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
+        setCoordinates(new Coordinates(exitStartPoint, exitEndPoint));
         ws.setColor(getColor());
-        ws.drawRect(exitCoordinates);
-        ws.fillRect(exitCoordinates);
+        ws.drawRect(getCoordinates());
+        ws.fillRect(getCoordinates());
 
         ws.setColor(getCrossColor());
-        ws.drawLine(exitCoordinates);
+        ws.drawLine(getCoordinates());
         Coordinates exitLineCoordinates = new Coordinates(
-                new Point(ws, exitCoordinates.getStartPoint().getX(), exitCoordinates.getStartPoint().getY() + 15),
-                new Point(ws, exitCoordinates.getEndPoint().getX(), exitCoordinates.getStartPoint().getY()));
+                new windowsystem.Point(ws, getCoordinates().getStartPoint().getX(), getCoordinates().getStartPoint().getY() + 15),
+                new Point(ws, getCoordinates().getEndPoint().getX(), getCoordinates().getStartPoint().getY()));
         ws.drawLine(exitLineCoordinates);
+    }
+
+
+
+    @Override
+    public void react(Point point) {
+        if (getCoordinates().contains(point)){
+            getWindowSystem().removeSimpleWindow(getId());
+            getWindowSystem().removeSimpleWindow(getSimpleWindow().getId());
+        }
     }
 }

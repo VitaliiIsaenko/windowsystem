@@ -1,7 +1,12 @@
+package windowsystem.decorators;
+
+import windowsystem.*;
+import windowsystem.Point;
+
 import java.awt.*;
 
 public class TitleBar extends TitleBarDecorator {
-    public TitleBar(SimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
+    public TitleBar(AbstractSimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
         super(simpleWindow, color, activeColor, textColor, title);
     }
 
@@ -11,8 +16,8 @@ public class TitleBar extends TitleBarDecorator {
 
         IWindowSystem ws = getSimpleWindow().getWindowSystem();
 
-        Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
-        Point titleEndPoint = new Point(ws,
+        windowsystem.Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
+        windowsystem.Point titleEndPoint = new windowsystem.Point(ws,
                 getSimpleWindow().getCoordinates().getEndPoint().getX(),
                 getSimpleWindow().getCoordinates().getStartPoint().getY() + 15);
         Coordinates titleCoordinates = new Coordinates(titleStartPoint, titleEndPoint);
@@ -29,10 +34,15 @@ public class TitleBar extends TitleBarDecorator {
 
         // Adding title to the window
         ws.setColor(getTextColor());
-        Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
+        windowsystem.Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
                 titleCoordinates.getStartPoint().getX(),
                 titleCoordinates.getStartPoint().getY() + 10);
         ws.drawString(getTitle(), titleTextStartPoint);
 
+    }
+
+    @Override
+    public void react(Point point) {
+        getSimpleWindow().react(point);
     }
 }

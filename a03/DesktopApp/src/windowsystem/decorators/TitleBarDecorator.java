@@ -1,6 +1,9 @@
+package windowsystem.decorators;
+
+import windowsystem.AbstractSimpleWindow;
 import java.awt.*;
 
-public abstract class TitleBarDecorator extends AbstractSimpleWindow{
+public abstract class TitleBarDecorator extends AbstractSimpleWindow {
     private AbstractSimpleWindow simpleWindow;
     private String title;
     private Color textColor;
@@ -14,7 +17,6 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow{
         this.textColor = textColor;
     }
 
-    @Override
     public AbstractSimpleWindow getSimpleWindow() {
         return simpleWindow;
     }
