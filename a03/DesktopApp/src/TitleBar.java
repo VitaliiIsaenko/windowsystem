@@ -1,18 +1,16 @@
 import java.awt.*;
 
 public class TitleBar extends TitleBarDecorator {
-    private ISimpleWindow simpleWindow;
-
-    public TitleBar(ISimpleWindow simpleWindow) {
-        this.simpleWindow = simpleWindow;
+    public TitleBar(SimpleWindow simpleWindow, Coordinates coordinates, Color color, String title) {
+        super(simpleWindow, coordinates, color, title);
     }
 
     @Override
     public void draw() {
-        WindowSystem ws = simpleWindow.getWindowSystem();
+        IWindowSystem ws = getSimpleWindow().getWindowSystem();
         Coordinates titleCoordinates = getCoordinates();
         // This sets the color of the top bar
-        if (simpleWindow.getId() == (ws.getSimpleWindows().size() - 1)) {
+        if (getSimpleWindow().getId() == (ws.getSimpleWindows().size() - 1)) {
             ws.setColor(Color.CYAN);
         } else {
             ws.setColor(Color.white);
@@ -23,29 +21,10 @@ public class TitleBar extends TitleBarDecorator {
 
         // Adding title to the window
         ws.setColor(Color.BLACK);
-        ws.drawString(simpleWindow.getTitle(), titleCoordinates.getStartPoint().getX(), titleCoordinates.getStartPoint().getY() + 10);
+        Point titleStartPoint = new Point(getSimpleWindow().getWindowSystem(),
+                titleCoordinates.getStartPoint().getX(),
+                titleCoordinates.getStartPoint().getY() + 10);
+        ws.drawString(getTitle(), titleStartPoint);
 
-    }
-
-    @Override
-    public WindowSystem getWindowSystem() {
-        return simpleWindow.getWindowSystem();
-    }
-
-    @Override
-    public Coordinates getCoordinates() {
-        return new Coordinates(simpleWindow.getCoordinates().getStartPoint(),
-                new Point(getWindowSystem(), simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15));
-        ;
-    }
-
-    @Override
-    public int getId() {
-        return simpleWindow.getId();
-    }
-
-    @Override
-    public String getTitle() {
-        return simpleWindow.getTitle();
     }
 }

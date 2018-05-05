@@ -8,7 +8,7 @@ public abstract class AbstractSimpleWindow {
     private int id;
     private Coordinates coordinates;
 
-    public AbstractSimpleWindow(WindowSystem windowSystem, Coordinates coordinates, Color color) {
+    public AbstractSimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
         this.coordinates = coordinates;
         this.windowSystem = windowSystem;
         this.color = color;
@@ -34,7 +34,7 @@ public abstract class AbstractSimpleWindow {
         this.id = id;
     }
 
-    public WindowSystem getWindowSystem() {
+    public IWindowSystem getWindowSystem() {
         return windowSystem;
     }
 

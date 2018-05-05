@@ -87,14 +87,14 @@ public class WindowManager implements IWindowManager {
 //        }
     }
 
-    public void addSimpleWindow(int width, int height, String title) {
+    public void addSimpleWindow(int width, int height) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
         Point startPoint = new Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
                 (windowSystem.getSimpleWindows().size() + 1) * 30);
         Point endPoint = new Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
-        windowSystem.addSimpleWindow(new SimpleWindow(windowSystem, new Coordinates(startPoint, endPoint), Color.BLACK, title));
+        windowSystem.addSimpleWindow(new SimpleWindow(windowSystem, new Coordinates(startPoint, endPoint), Color.BLACK));
     }
 
     public void dragWindow() {

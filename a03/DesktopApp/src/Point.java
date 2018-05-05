@@ -1,10 +1,10 @@
 public class Point {
-    private final WindowSystem contextWindowSystem;
+    private final IWindowSystem contextWindowSystem;
 
     private float x;
     private float y;
 
-    public Point(WindowSystem contextWindowSystem, int x, int y) {
+    public Point(IWindowSystem contextWindowSystem, int x, int y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > contextWindowSystem.getWidth() || y < 0 || y > contextWindowSystem.getHeight()) {
             throw new IllegalArgumentException("Coordinate values should not be negative or out of window size");
@@ -13,7 +13,7 @@ public class Point {
         this.y = (float) y / contextWindowSystem.getHeight();
     }
 
-    public Point(WindowSystem contextWindowSystem, float x, float y) {
+    public Point(IWindowSystem contextWindowSystem, float x, float y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > 1 || y < 0 || y > 1) {
             throw new IllegalArgumentException("Relative values of coordinates should be between 0 and 1");
