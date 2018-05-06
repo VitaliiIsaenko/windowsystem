@@ -10,18 +10,9 @@ public abstract class AbstractSimpleWindow implements Observer {
     private IWindowSystem windowSystem;
     private Coordinates coordinates;
 
-    public AbstractSimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
-        this.coordinates = coordinates;
+    public AbstractSimpleWindow(IWindowSystem windowSystem, Color color) {
         this.windowSystem = windowSystem;
         this.color = color;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
     }
 
     public void setColor(Color color) {
@@ -40,5 +31,13 @@ public abstract class AbstractSimpleWindow implements Observer {
 
     public Color getColor() {
         return color;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

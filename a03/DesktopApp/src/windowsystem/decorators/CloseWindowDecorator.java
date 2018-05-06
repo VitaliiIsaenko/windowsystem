@@ -1,15 +1,17 @@
 package windowsystem.decorators;
 
 import windowsystem.*;
+import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 import java.awt.*;
 
 public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
     private AbstractSimpleWindow simpleWindow;
     private Color crossColor;
+    private Coordinates coordinates;
 
     public CloseWindowDecorator(AbstractSimpleWindow simpleWindow, Color color, Color crossColor) {
-        super(simpleWindow.getWindowSystem(), simpleWindow.getCoordinates(), color);
+        super(simpleWindow.getWindowSystem(), color);
         this.simpleWindow = simpleWindow;
         this.crossColor = crossColor;
     }
@@ -38,5 +40,15 @@ public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
 
     @Override
     public void react(Point clickedPoint, Point toMove) { getSimpleWindow().react(clickedPoint, toMove);
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    @Override
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

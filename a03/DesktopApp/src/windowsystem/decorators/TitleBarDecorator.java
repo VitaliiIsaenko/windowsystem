@@ -9,9 +9,10 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow {
     private String title;
     private Color textColor;
     private Color activeColor;
+    private Coordinates coordinates;
 
     public TitleBarDecorator(AbstractSimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
-        super(simpleWindow.getWindowSystem(), simpleWindow.getCoordinates(), color);
+        super(simpleWindow.getWindowSystem(), color);
         this.simpleWindow = simpleWindow;
         this.title = title;
         this.activeColor = activeColor;
@@ -54,5 +55,15 @@ public abstract class TitleBarDecorator extends AbstractSimpleWindow {
     @Override
     public void setId(int id) {
         getSimpleWindow().setId(id);
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    @Override
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

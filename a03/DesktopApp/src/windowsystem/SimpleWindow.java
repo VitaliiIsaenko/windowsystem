@@ -12,7 +12,8 @@ public class SimpleWindow extends AbstractSimpleWindow {
     private int id;
 
     public SimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
-        super(windowSystem, coordinates, color);
+        super(windowSystem, color);
+        setCoordinates(coordinates);
     }
 
     public void draw() {
