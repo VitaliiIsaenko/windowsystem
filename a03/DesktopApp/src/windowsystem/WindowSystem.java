@@ -30,7 +30,6 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         this.height = height;
 
         simpleWindows = new LinkedList<>();
-        minimisedSimpleWindows = new LinkedList<>();
     }
 
     public void setWindowManager(WindowManager windowManager) {
@@ -61,14 +60,6 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         return simpleWindow.getId();
     }
 
-    public void addMinimizedSimpleWindow(WindowComponent simpleWindow) {
-        minimisedSimpleWindows.add(simpleWindow);
-    }
-
-    public void removeMinimizedSimpleWindow(WindowComponent simpleWindow) {
-        minimisedSimpleWindows.remove(simpleWindow);
-    }
-
     /**
      * Removes window from the window system
      *
@@ -78,7 +69,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         simpleWindows.remove(findSimpleWindow(id));
         for (WindowComponent sw :
                 simpleWindows) {
-            sw.setId(sw.getId()-1);
+            sw.setId(sw.getId() - 1);
         }
         requestRepaint();
     }
@@ -129,18 +120,17 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         for (int i = 0; i < simpleWindows.size(); i++) {
             WindowComponent simpleWindow = simpleWindows.get(i);
             simpleWindow.draw();
-//            windowManager.decorateWindow(i);
         }
 
-        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
-            setColor(Color.GREEN);
-
-            drawRect(50 * i + 10, 550, 50 * i + 50, 580);
-            fillRect(50 * i + 10, 550, 50 * i + 50, 580);
-            setColor(Color.WHITE);
-            drawString(Integer.toString(i), 50 * i + 13, 565);
-        }
+//        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
+//            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
+//            setColor(Color.GREEN);
+//
+//            drawRect(50 * i + 10, 550, 50 * i + 50, 580);
+//            fillRect(50 * i + 10, 550, 50 * i + 50, 580);
+//            setColor(Color.WHITE);
+//            drawString(Integer.toString(i), 50 * i + 13, 565);
+//        }
 
     }
 
@@ -149,7 +139,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
         System.out.println(simpleWindows);
 
-        windowManager.handleMouseClicked(new Point(this,x, y));
+        windowManager.handleMouseClicked(new Point(this, x, y));
 
 //        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
 //            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
@@ -174,7 +164,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
-                windowManager.handleMouseDragged(new Point(this, x,y), new Point(this,x2,y2));
+                windowManager.handleMouseDragged(new Point(this, x, y), new Point(this, x2, y2));
             }
         }
     }
@@ -194,7 +184,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
-    public void drawString(String text, windowsystem.coordinates.Point startingPoint){
+    public void drawString(String text, windowsystem.coordinates.Point startingPoint) {
         drawString(text, startingPoint.getX(), startingPoint.getY());
     }
 

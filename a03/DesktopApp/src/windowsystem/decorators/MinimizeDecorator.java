@@ -8,14 +8,15 @@ import java.awt.*;
 
 public abstract class MinimizeDecorator extends WindowComponent {
     private WindowComponent simpleWindow;
-    private Coordinates expandedWindowCoordinates;
     private Color color;
-    private WindowComponent expandedWindow;
+    private Color minimizedColor;
+    private boolean isMinimized;
 
-    public MinimizeDecorator(WindowComponent simpleWindow, Color color) {
+    public MinimizeDecorator(WindowComponent simpleWindow, Color color, Color minimizedColor) {
         super(simpleWindow.getWindowSystem());
         this.simpleWindow = simpleWindow;
         this.color = color;
+        this.minimizedColor = minimizedColor;
     }
 
     public WindowComponent getSimpleWindow() {
@@ -48,11 +49,19 @@ public abstract class MinimizeDecorator extends WindowComponent {
         this.color = color;
     }
 
-    public WindowComponent getExpandedWindow() {
-        return expandedWindow;
+    public boolean isMinimized() {
+        return isMinimized;
     }
 
-    public void setExpandedWindow(WindowComponent expandedWindow) {
-        this.expandedWindow = expandedWindow;
+    public void setMinimized(boolean minimized) {
+        isMinimized = minimized;
+    }
+
+    public Color getMinimizedColor() {
+        return minimizedColor;
+    }
+
+    public void setMinimizedColor(Color minimizedColor) {
+        this.minimizedColor = minimizedColor;
     }
 }

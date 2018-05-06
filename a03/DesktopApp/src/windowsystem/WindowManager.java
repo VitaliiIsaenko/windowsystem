@@ -48,7 +48,7 @@ public class WindowManager implements IWindowManager {
                 new TitleBar(
                         new SimpleWindow(windowSystem, simpleWindowCoordinates, Color.BLACK),
                         Color.WHITE, Color.CYAN, Color.BLACK, title),
-                Color.RED, Color.BLACK), Color.GREEN);
+                Color.RED, Color.BLACK), Color.GREEN, Color.YELLOW);
 
         windowSystem.addSimpleWindow(simpleWindow);
     }

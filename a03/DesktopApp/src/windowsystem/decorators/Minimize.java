@@ -7,15 +7,14 @@ import windowsystem.coordinates.Point;
 import java.awt.*;
 
 public class Minimize extends MinimizeDecorator {
-    public Minimize(WindowComponent simpleWindow, Color color) {
-        super(simpleWindow, color);
+    public Minimize(WindowComponent simpleWindow, Color color, Color minimizedColor) {
+        super(simpleWindow, color, minimizedColor);
     }
 
     @Override
     public void draw() {
-        getSimpleWindow().draw();
-
-        if (getExpandedWindow() == null) {
+        if (!isMinimized()) {
+            getSimpleWindow().draw();
             // Adding minimise button to the window
             setCoordinates(new Coordinates(
                     new Point(getWindowSystem(),
@@ -27,14 +26,18 @@ public class Minimize extends MinimizeDecorator {
             getWindowSystem().setColor(getColor());
             getWindowSystem().drawRect(getCoordinates());
             getWindowSystem().fillRect(getCoordinates());
+
         } else {
             Coordinates minimizeWindow = new Coordinates(
-                    new Point(getWindowSystem(), 50*getId(), 550),
-                    new Point(getWindowSystem(), 50*getId()+50,580)
+                    new Point(getWindowSystem(), 50 * getId(), 550),
+                    new Point(getWindowSystem(), 50 * getId() + 50, 580)
             );
-            getWindowSystem().setColor(getColor());
+            setCoordinates(minimizeWindow);
+            getWindowSystem().setColor(getMinimizedColor());
             getWindowSystem().drawRect(minimizeWindow);
             getWindowSystem().fillRect(minimizeWindow);
+
+
         }
     }
 
@@ -42,16 +45,11 @@ public class Minimize extends MinimizeDecorator {
     public void react(Point clickedPoint) {
         if (getCoordinates().contains(clickedPoint)) {
             System.out.println("crazy");
-            for (WindowComponent sw : getWindowSystem().getSimpleWindows()) {
-                if (getId() == sw.getId()) {
-                    setExpandedWindow(sw);
-                    getWindowSystem().getSimpleWindows().remove(sw);
-                    getWindowSystem().addMinimizedSimpleWindow(sw);
-                    break;
-                }
+            if (isMinimized()) {
+                setMinimized(false);
+            } else {
+                setMinimized(true);
             }
-            //unminimize
-
         } else {
             getSimpleWindow().react(clickedPoint);
         }

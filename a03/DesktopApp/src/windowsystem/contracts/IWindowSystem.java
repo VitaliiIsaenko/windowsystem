@@ -19,6 +19,4 @@ public interface IWindowSystem {
     void removeSimpleWindow(int id);
     int addSimpleWindow(WindowComponent simpleWindow);
     void requestRepaint();
-    void addMinimizedSimpleWindow(WindowComponent simpleWindow);
-    void removeMinimizedSimpleWindow(WindowComponent simpleWindow);
 }
