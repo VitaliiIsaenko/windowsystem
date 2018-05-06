@@ -1,11 +1,13 @@
 package windowsystem;
 
 import windowsystem.contracts.IWindowSystem;
-import windowsystem.contracts.Observer;
 import windowsystem.coordinates.Coordinates;
-import java.awt.*;
+import windowsystem.coordinates.Point;
 
-public abstract class WindowComponent implements Observer {
+/**
+ * Abstract window component defining commonalities
+ */
+public abstract class WindowComponent {
     private IWindowSystem windowSystem;
     private Coordinates coordinates;
 
@@ -30,4 +32,8 @@ public abstract class WindowComponent implements Observer {
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+
+    abstract public void react(windowsystem.coordinates.Point clickedPoint);
+
+    abstract public void react(windowsystem.coordinates.Point clickedPoint, Point toMove);
 }

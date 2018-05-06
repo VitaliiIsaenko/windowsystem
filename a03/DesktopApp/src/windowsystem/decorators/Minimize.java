@@ -6,16 +6,21 @@ import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
+/**
+ * Concrete minimize window component
+ */
 public class Minimize extends MinimizeDecorator {
     public Minimize(WindowComponent simpleWindow, Color color, Color minimizedColor) {
         super(simpleWindow, color, minimizedColor);
     }
 
+    /**
+     * Draws itself
+     */
     @Override
     public void draw() {
         if (!isMinimized()) {
             getSimpleWindow().draw();
-            // Adding minimise button to the window
             setCoordinates(new Coordinates(
                     new Point(getWindowSystem(),
                             getSimpleWindow().getCoordinates().getEndPoint().getX() - 30,
@@ -26,7 +31,6 @@ public class Minimize extends MinimizeDecorator {
             getWindowSystem().setColor(getColor());
             getWindowSystem().drawRect(getCoordinates());
             getWindowSystem().fillRect(getCoordinates());
-
         } else {
             Coordinates minimizeWindow = new Coordinates(
                     new Point(getWindowSystem(), 50 * getId(), 550),
@@ -36,15 +40,17 @@ public class Minimize extends MinimizeDecorator {
             getWindowSystem().setColor(getMinimizedColor());
             getWindowSystem().drawRect(minimizeWindow);
             getWindowSystem().fillRect(minimizeWindow);
-
-
         }
     }
 
+    /**
+     * Minimizes or maximizes the window depending on current window state
+     *
+     * @param clickedPoint clicked point
+     */
     @Override
     public void react(Point clickedPoint) {
         if (getCoordinates().contains(clickedPoint)) {
-            System.out.println("crazy");
             if (isMinimized()) {
                 setMinimized(false);
             } else {

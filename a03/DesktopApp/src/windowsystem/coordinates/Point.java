@@ -2,11 +2,21 @@ package windowsystem.coordinates;
 
 import windowsystem.contracts.IWindowSystem;
 
+/**
+ * Represents 2D point on windows system in relative to window system scale
+ */
 public class Point {
     private final IWindowSystem contextWindowSystem;
     private float x;
     private float y;
 
+    /**
+     * Initialises the point
+     *
+     * @param contextWindowSystem window system where point is present
+     * @param x                   absolute value of x coordinate of the point
+     * @param y                   absolute value of y coordinate of the point
+     */
     public Point(IWindowSystem contextWindowSystem, int x, int y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > contextWindowSystem.getWidth() || y < 0 || y > contextWindowSystem.getHeight()) {
@@ -16,6 +26,13 @@ public class Point {
         this.y = (float) y / contextWindowSystem.getHeight();
     }
 
+    /**
+     * Initialises the point
+     *
+     * @param contextWindowSystem window system where point is present
+     * @param x                   relative value of x coordinate of the point (from 0 to 1)
+     * @param y                   relative value of y coordinate of the point (from 0 to 1)
+     */
     public Point(IWindowSystem contextWindowSystem, float x, float y) {
         this.contextWindowSystem = contextWindowSystem;
         if (x < 0 || x > 1 || y < 0 || y > 1) {
@@ -24,7 +41,6 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-
 
     public int getX() {
         return Math.round(this.x * contextWindowSystem.getWidth());

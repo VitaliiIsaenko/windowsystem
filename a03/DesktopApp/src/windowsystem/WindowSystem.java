@@ -11,12 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Window system. Has responsibilities for managing windows
+ * Window system, has handles input, output and window management
  */
 public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
-    private List<WindowComponent> simpleWindows;
-
-    private List<WindowComponent> minimisedSimpleWindows;
+    private List<WindowComponent> windows;
     private IWindowManager windowManager;
 
     private int width;
@@ -24,18 +22,23 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
 
     private Point lastMousePosition;
 
+    /**
+     * Initializes window system
+     *
+     * @param width  width of the window system
+     * @param height height of the window system
+     */
     public WindowSystem(int width, int height) {
         super(width, height);
         this.width = width;
         this.height = height;
 
-        simpleWindows = new LinkedList<>();
+        windows = new LinkedList<>();
     }
 
     public void setWindowManager(WindowManager windowManager) {
         this.windowManager = windowManager;
     }
-
 
     public int getWidth() {
         return width;
@@ -45,44 +48,43 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         return height;
     }
 
-    public List<WindowComponent> getSimpleWindows() {
-        return simpleWindows;
+    public List<WindowComponent> getWindows() {
+        return windows;
     }
 
     /**
-     * Adds windows to the window system
+     * Adds window to the window system
      *
-     * @param simpleWindow window to add
+     * @param window window to add
      */
-    public int addSimpleWindow(WindowComponent simpleWindow) {
-        simpleWindow.setId(getNextWindowId());
-        simpleWindows.add(simpleWindow);
-        return simpleWindow.getId();
+    public int addWindow(WindowComponent window) {
+        window.setId(getNextWindowId());
+        windows.add(window);
+        return window.getId();
     }
 
     /**
      * Removes window from the window system
      *
-     * @param id identficator of window to remove
+     * @param id identification of window to remove
      */
-    public void removeSimpleWindow(int id) {
-        simpleWindows.remove(findSimpleWindow(id));
-        for (WindowComponent sw :
-                simpleWindows) {
+    public void removeWindow(int id) {
+        windows.remove(findWindow(id));
+        for (WindowComponent sw : windows) {
             sw.setId(sw.getId() - 1);
         }
         requestRepaint();
     }
 
     /**
-     * finds window on the window system by coordinates
+     * Finds window on the window system by coordinates
      *
-     * @param id identificator of required window
+     * @param id identification of required window
      * @return found simple window or null if not found
      */
-    public WindowComponent findSimpleWindow(int id) {
+    public WindowComponent findWindow(int id) {
         WindowComponent foundWindow = null;
-        for (WindowComponent simpleWindow : simpleWindows) {
+        for (WindowComponent simpleWindow : windows) {
             if (simpleWindow.getId() == id) {
                 foundWindow = simpleWindow;
             }
@@ -106,10 +108,6 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         drawLine(startXCalculated, startYCalculated, endXCalculated, endYCalculated);
     }
 
-    public List<WindowComponent> getMinimisedSimpleWindows() {
-        return minimisedSimpleWindows;
-    }
-
     /**
      * Paints window system
      */
@@ -117,42 +115,32 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
     protected void handlePaint() {
         setBackground(Color.PINK);
 
-        for (int i = 0; i < simpleWindows.size(); i++) {
-            WindowComponent simpleWindow = simpleWindows.get(i);
+        for (int i = 0; i < windows.size(); i++) {
+            WindowComponent simpleWindow = windows.get(i);
             simpleWindow.draw();
         }
-
-//        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-//            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
-//            setColor(Color.GREEN);
-//
-//            drawRect(50 * i + 10, 550, 50 * i + 50, 580);
-//            fillRect(50 * i + 10, 550, 50 * i + 50, 580);
-//            setColor(Color.WHITE);
-//            drawString(Integer.toString(i), 50 * i + 13, 565);
-//        }
-
     }
 
+    /**
+     * Handles clicked mouse
+     *
+     * @param x x coordinate of the click
+     * @param y y coordinate of the click
+     */
     @Override
     public void handleMouseClicked(int x, int y) {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
-        System.out.println(simpleWindows);
+        System.out.println(windows);
 
         windowManager.handleMouseClicked(new Point(this, x, y));
-
-//        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-//            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
-//            if (x > (50 * i + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
-//                System.out.println("Maximised Window");
-//                simpleWindows.add(simpleWindow);
-//                minimisedSimpleWindows.remove(simpleWindow);
-//                requestRepaint();
-//            }
-//        }
     }
 
-
+    /**
+     * Handles mouse dragging
+     *
+     * @param x x coordinate of the drag
+     * @param y y coordinate of the drag
+     */
     @Override
     public void handleMouseDragged(int x, int y) {
         if (lastMousePosition == null) {
@@ -163,33 +151,58 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
             if (Math.abs(x2) >= 5 || Math.abs(y2) >= 5) {
                 lastMousePosition = new Point(this, x, y);
             } else {
-                System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());
                 windowManager.handleMouseDragged(new Point(this, x, y), new Point(this, x2, y2));
             }
         }
     }
 
+    /**
+     * Draws rectangle
+     *
+     * @param coordinates 2d coordinates
+     */
     public void drawRect(Coordinates coordinates) {
         drawRect(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
+    /**
+     * Fills rectangle
+     *
+     * @param coordinates 2d coordinates
+     */
     public void fillRect(Coordinates coordinates) {
         fillRect(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
+    /**
+     * Draws line
+     *
+     * @param coordinates 2d coordinates
+     */
     public void drawLine(Coordinates coordinates) {
         drawLine(coordinates.getStartPoint().getX(), coordinates.getStartPoint().getY(),
                 coordinates.getEndPoint().getX(), coordinates.getEndPoint().getY());
     }
 
+    /**
+     * Draws string on the window system
+     *
+     * @param text          text to draw
+     * @param startingPoint starting point of the string drawing
+     */
     public void drawString(String text, windowsystem.coordinates.Point startingPoint) {
         drawString(text, startingPoint.getX(), startingPoint.getY());
     }
 
+    /**
+     * Gets next window id
+     *
+     * @return window id
+     */
     private int getNextWindowId() {
-        int maxId = simpleWindows.stream().map(simpleWindow -> simpleWindow.getId())
+        int maxId = windows.stream().map(simpleWindow -> simpleWindow.getId())
                 .mapToInt(id -> id)
                 .max().orElse(0);
         return maxId + 1;

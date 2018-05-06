@@ -4,52 +4,77 @@ import windowsystem.contracts.IWindowManager;
 import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
-import windowsystem.decorators.CloseWindow;
+import windowsystem.decorators.Close;
 import windowsystem.decorators.Minimize;
 import windowsystem.decorators.TitleBar;
 
 import java.awt.*;
 
+/**
+ * Window manager
+ */
 public class WindowManager implements IWindowManager {
     private IWindowSystem windowSystem;
 
+    /**
+     * Initializes window manager
+     *
+     * @param windowSystem window system to apply window manager to
+     */
     public WindowManager(WindowSystem windowSystem) {
         this.windowSystem = windowSystem;
         windowSystem.setWindowManager(this);
     }
 
+    /**
+     * Handles mouse click
+     *
+     * @param point point where mouse was clicked
+     */
     @Override
     public void handleMouseClicked(Point point) {
-        for (int i = 0; i < windowSystem.getSimpleWindows().size(); i++) {
-            windowSystem.getSimpleWindows().get(i).react(point);
+        for (int i = 0; i < windowSystem.getWindows().size(); i++) {
+            windowSystem.getWindows().get(i).react(point);
         }
         windowSystem.requestRepaint();
     }
 
+    /**
+     * Handles mouse dragging
+     *
+     * @param clickedPoint clicked point
+     * @param toMove       point to move
+     */
     @Override
     public void handleMouseDragged(Point clickedPoint, Point toMove) {
-        for (int i = 0; i < windowSystem.getSimpleWindows().size(); i++) {
-            windowSystem.getSimpleWindows().get(i).react(clickedPoint, toMove);
-
+        for (int i = 0; i < windowSystem.getWindows().size(); i++) {
+            windowSystem.getWindows().get(i).react(clickedPoint, toMove);
         }
         windowSystem.requestRepaint();
     }
 
+    /**
+     * Adds simple window decorating it with all necessary decorators of this concrete window manager
+     *
+     * @param width  width of the created window
+     * @param height height of the created window
+     * @param title  title of the created window
+     */
     public void addSimpleWindow(int width, int height, String title) {
         if (width + 20 > windowSystem.getWidth() || height + 20 > windowSystem.getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
-        Point startPoint = new windowsystem.coordinates.Point(windowSystem, (windowSystem.getSimpleWindows().size() + 1) * 30,
-                (windowSystem.getSimpleWindows().size() + 1) * 30);
+        Point startPoint = new windowsystem.coordinates.Point(windowSystem, (windowSystem.getWindows().size() + 1) * 30,
+                (windowSystem.getWindows().size() + 1) * 30);
         Point endPoint = new windowsystem.coordinates.Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
         Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
 
-        WindowComponent simpleWindow = new Minimize(new CloseWindow(
+        WindowComponent simpleWindow = new Minimize(new Close(
                 new TitleBar(
                         new SimpleWindow(windowSystem, simpleWindowCoordinates, Color.BLACK),
-                        Color.WHITE, Color.CYAN, Color.BLACK, title),
+                        title, Color.WHITE, Color.CYAN, Color.BLACK),
                 Color.RED, Color.BLACK), Color.GREEN, Color.YELLOW);
 
-        windowSystem.addSimpleWindow(simpleWindow);
+        windowSystem.addWindow(simpleWindow);
     }
 }

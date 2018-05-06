@@ -2,27 +2,40 @@ package windowsystem.decorators;
 
 import windowsystem.WindowComponent;
 import windowsystem.coordinates.Coordinates;
+
 import java.awt.*;
 
+/**
+ * Abstract decorator defining commonalities for any concrete title bar window component
+ */
 public abstract class TitleBarDecorator extends WindowComponent {
-    private WindowComponent simpleWindow;
+    private WindowComponent windowComponent;
     private String title;
     private Color textColor;
     private Color activeColor;
     private Color color;
     private Coordinates coordinates;
 
-    public TitleBarDecorator(WindowComponent simpleWindow, Color color, Color activeColor, Color textColor, String title) {
-        super(simpleWindow.getWindowSystem());
-        this.simpleWindow = simpleWindow;
+    /**
+     * Initializes title bar
+     *
+     * @param windowComponent window component to decorate
+     * @param title           title text
+     * @param color           color of title bar
+     * @param activeColor     color of active window title bar
+     * @param textColor       color of text on the title bar
+     */
+    public TitleBarDecorator(WindowComponent windowComponent, String title, Color color, Color activeColor, Color textColor) {
+        super(windowComponent.getWindowSystem());
+        this.windowComponent = windowComponent;
         this.title = title;
         this.color = color;
         this.activeColor = activeColor;
         this.textColor = textColor;
     }
 
-    public WindowComponent getSimpleWindow() {
-        return simpleWindow;
+    public WindowComponent getWindowComponent() {
+        return windowComponent;
     }
 
     public String getTitle() {
@@ -51,12 +64,12 @@ public abstract class TitleBarDecorator extends WindowComponent {
 
     @Override
     public int getId() {
-        return getSimpleWindow().getId();
+        return getWindowComponent().getId();
     }
 
     @Override
     public void setId(int id) {
-        getSimpleWindow().setId(id);
+        getWindowComponent().setId(id);
     }
 
     @Override

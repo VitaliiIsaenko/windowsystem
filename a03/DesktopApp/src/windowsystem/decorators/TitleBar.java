@@ -9,75 +9,90 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Concrete title bar component
+ */
 public class TitleBar extends TitleBarDecorator {
-    public TitleBar(WindowComponent simpleWindow, Color color, Color activeColor, Color textColor, String title) {
-        super(simpleWindow, color, activeColor, textColor, title);
+    public TitleBar(WindowComponent simpleWindow, String title, Color color, Color activeColor, Color textColor) {
+        super(simpleWindow, title, color, activeColor, textColor);
     }
 
+    /**
+     * Draws itself
+     */
     @Override
     public void draw() {
-        getSimpleWindow().draw();
+        getWindowComponent().draw();
 
-        IWindowSystem ws = getSimpleWindow().getWindowSystem();
+        IWindowSystem ws = getWindowComponent().getWindowSystem();
 
-        windowsystem.coordinates.Point titleStartPoint = getSimpleWindow().getCoordinates().getStartPoint();
+        windowsystem.coordinates.Point titleStartPoint = getWindowComponent().getCoordinates().getStartPoint();
         windowsystem.coordinates.Point titleEndPoint = new windowsystem.coordinates.Point(ws,
-                getSimpleWindow().getCoordinates().getEndPoint().getX(),
-                getSimpleWindow().getCoordinates().getStartPoint().getY() + 15);
+                getWindowComponent().getCoordinates().getEndPoint().getX(),
+                getWindowComponent().getCoordinates().getStartPoint().getY() + 15);
         setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
 
-        // This sets the color of the top bar
-        if (getSimpleWindow().getId() == (ws.getSimpleWindows().size())) {
+        //Set color of the title bar depending on state of the window (active/not active)
+        if (getWindowComponent().getId() == (ws.getWindows().size())) {
             ws.setColor(getActiveColor());
         } else {
             ws.setColor(getColor());
         }
-        // Draw the top bar of the window
         ws.drawRect(getCoordinates());
         ws.fillRect(getCoordinates());
 
-        // Adding title to the window
         ws.setColor(getTextColor());
-        Point titleTextStartPoint = new Point(getSimpleWindow().getWindowSystem(),
+        Point titleTextStartPoint = new Point(getWindowComponent().getWindowSystem(),
                 getCoordinates().getStartPoint().getX(),
                 getCoordinates().getStartPoint().getY() + 10);
         ws.drawString(getTitle(), titleTextStartPoint);
 
     }
 
+    /**
+     * Drags the window
+     *
+     * @param clickedPoint clicked point
+     * @param toMove       point to move
+     */
     @Override
     public void react(Point clickedPoint, Point toMove) {
         if (getCoordinates().contains(clickedPoint)) {
-            int newStartX = getSimpleWindow().getCoordinates().getStartPoint().getX() + toMove.getX();
-            int newStartY = getSimpleWindow().getCoordinates().getStartPoint().getY() + toMove.getY();
-            int newEndX = getSimpleWindow().getCoordinates().getEndPoint().getX() + toMove.getX();
-            int newEndY = getSimpleWindow().getCoordinates().getEndPoint().getY() + toMove.getY();
-            getSimpleWindow().setCoordinates(new Coordinates(
+            int newStartX = getWindowComponent().getCoordinates().getStartPoint().getX() + toMove.getX();
+            int newStartY = getWindowComponent().getCoordinates().getStartPoint().getY() + toMove.getY();
+            int newEndX = getWindowComponent().getCoordinates().getEndPoint().getX() + toMove.getX();
+            int newEndY = getWindowComponent().getCoordinates().getEndPoint().getY() + toMove.getY();
+            getWindowComponent().setCoordinates(new Coordinates(
                     new Point(getWindowSystem(), newStartX, newStartY),
                     new Point(getWindowSystem(), newEndX, newEndY)
             ));
         } else {
-            getSimpleWindow().react(clickedPoint, toMove);
+            getWindowComponent().react(clickedPoint, toMove);
         }
     }
 
+    /**
+     * Makes the clicked window active
+     *
+     * @param clickedPoint clicked point
+     */
     @Override
     public void react(Point clickedPoint) {
         if (getCoordinates().contains(clickedPoint)) {
-            List<WindowComponent> simpleWindows = new LinkedList<>(getWindowSystem().getSimpleWindows());
-            getWindowSystem().getSimpleWindows().removeAll(simpleWindows);
+            List<WindowComponent> simpleWindows = new LinkedList<>(getWindowSystem().getWindows());
+            getWindowSystem().getWindows().removeAll(simpleWindows);
 
             WindowComponent currentSimpleWindow = null;
             for (WindowComponent sw : simpleWindows) {
                 if (sw.getId() == this.getId()) {
                     currentSimpleWindow = sw;
                 } else {
-                    getWindowSystem().addSimpleWindow(sw);
+                    getWindowSystem().addWindow(sw);
                 }
             }
-            getWindowSystem().addSimpleWindow(currentSimpleWindow);
+            getWindowSystem().addWindow(currentSimpleWindow);
         } else {
-            getSimpleWindow().react(clickedPoint);
+            getWindowComponent().react(clickedPoint);
         }
     }
 }

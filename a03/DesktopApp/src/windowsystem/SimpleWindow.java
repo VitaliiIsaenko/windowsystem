@@ -3,6 +3,7 @@ package windowsystem;
 import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
+
 import java.awt.Color;
 
 /**
@@ -24,10 +25,8 @@ public class SimpleWindow extends WindowComponent {
         getWindowSystem().fillRect(getCoordinates());
     }
 
-
     @Override
     public void react(Point clickedPoint) {
-
     }
 
     @Override

@@ -7,17 +7,23 @@ import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
-public class CloseWindow extends CloseWindowDecorator {
-    public CloseWindow(WindowComponent simpleWindow, Color color, Color crossColor) {
-        super(simpleWindow, color, crossColor);
+/**
+ * Concrete close window component
+ */
+public class Close extends CloseDecorator {
+    public Close(WindowComponent windowComponent, Color color, Color crossColor) {
+        super(windowComponent, color, crossColor);
     }
 
+    /**
+     * Draws itself
+     */
     @Override
     public void draw() {
-        getSimpleWindow().draw();
+        getWindowComponent().draw();
 
         IWindowSystem ws = getWindowSystem();
-        WindowComponent simpleWindow = getSimpleWindow();
+        WindowComponent simpleWindow = getWindowComponent();
         // Adding close button to the window
         Point exitStartPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
         windowsystem.coordinates.Point exitEndPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
@@ -34,12 +40,17 @@ public class CloseWindow extends CloseWindowDecorator {
         ws.drawLine(exitLineCoordinates);
     }
 
+    /**
+     * Closes the window
+     *
+     * @param point clicked point
+     */
     @Override
     public void react(Point point) {
         if (getCoordinates().contains(point)) {
-            getWindowSystem().removeSimpleWindow(getId());
+            getWindowSystem().removeWindow(getId());
         } else {
-            getSimpleWindow().react(point);
+            getWindowComponent().react(point);
         }
     }
 
