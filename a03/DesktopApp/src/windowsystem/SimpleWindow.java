@@ -8,12 +8,14 @@ import java.awt.Color;
 /**
  * Window representation
  */
-public class SimpleWindow extends AbstractSimpleWindow {
+public class SimpleWindow extends WindowComponent {
     private int id;
+    private Color color;
 
     public SimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
-        super(windowSystem, color);
+        super(windowSystem);
         setCoordinates(coordinates);
+        this.color = color;
     }
 
     public void draw() {
@@ -40,5 +42,13 @@ public class SimpleWindow extends AbstractSimpleWindow {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

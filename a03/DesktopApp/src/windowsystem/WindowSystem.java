@@ -14,9 +14,9 @@ import java.util.List;
  * Window system. Has responsibilities for managing windows
  */
 public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
-    private List<AbstractSimpleWindow> simpleWindows;
+    private List<WindowComponent> simpleWindows;
 
-    private List<AbstractSimpleWindow> minimisedSimpleWindows;
+    private List<WindowComponent> minimisedSimpleWindows;
     private IWindowManager windowManager;
 
     private int width;
@@ -46,7 +46,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         return height;
     }
 
-    public List<AbstractSimpleWindow> getSimpleWindows() {
+    public List<WindowComponent> getSimpleWindows() {
         return simpleWindows;
     }
 
@@ -55,17 +55,17 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      *
      * @param simpleWindow window to add
      */
-    public int addSimpleWindow(AbstractSimpleWindow simpleWindow) {
+    public int addSimpleWindow(WindowComponent simpleWindow) {
         simpleWindow.setId(getNextWindowId());
         simpleWindows.add(simpleWindow);
         return simpleWindow.getId();
     }
 
-    public void addMinimizedSimpleWindow(AbstractSimpleWindow simpleWindow) {
+    public void addMinimizedSimpleWindow(WindowComponent simpleWindow) {
         minimisedSimpleWindows.add(simpleWindow);
     }
 
-    public void removeMinimizedSimpleWindow(AbstractSimpleWindow simpleWindow) {
+    public void removeMinimizedSimpleWindow(WindowComponent simpleWindow) {
         minimisedSimpleWindows.remove(simpleWindow);
     }
 
@@ -76,6 +76,11 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      */
     public void removeSimpleWindow(int id) {
         simpleWindows.remove(findSimpleWindow(id));
+        for (WindowComponent sw :
+                simpleWindows) {
+            sw.setId(sw.getId()-1);
+        }
+        requestRepaint();
     }
 
     /**
@@ -84,9 +89,9 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      * @param id identificator of required window
      * @return found simple window or null if not found
      */
-    public AbstractSimpleWindow findSimpleWindow(int id) {
-        AbstractSimpleWindow foundWindow = null;
-        for (AbstractSimpleWindow simpleWindow : simpleWindows) {
+    public WindowComponent findSimpleWindow(int id) {
+        WindowComponent foundWindow = null;
+        for (WindowComponent simpleWindow : simpleWindows) {
             if (simpleWindow.getId() == id) {
                 foundWindow = simpleWindow;
             }
@@ -110,7 +115,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         drawLine(startXCalculated, startYCalculated, endXCalculated, endYCalculated);
     }
 
-    public List<AbstractSimpleWindow> getMinimisedSimpleWindows() {
+    public List<WindowComponent> getMinimisedSimpleWindows() {
         return minimisedSimpleWindows;
     }
 
@@ -122,13 +127,13 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         setBackground(Color.PINK);
 
         for (int i = 0; i < simpleWindows.size(); i++) {
-            AbstractSimpleWindow simpleWindow = simpleWindows.get(i);
+            WindowComponent simpleWindow = simpleWindows.get(i);
             simpleWindow.draw();
 //            windowManager.decorateWindow(i);
         }
 
         for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-            AbstractSimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
+            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
             setColor(Color.GREEN);
 
             drawRect(50 * i + 10, 550, 50 * i + 50, 580);
@@ -147,7 +152,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         windowManager.handleMouseClicked(new Point(this,x, y));
 
 //        for (int i = 0; i < minimisedSimpleWindows.size(); i++) {
-//            AbstractSimpleWindow simpleWindow = minimisedSimpleWindows.get(i);
+//            WindowComponent simpleWindow = minimisedSimpleWindows.get(i);
 //            if (x > (50 * i + 10) && x < (50 * i + 50) && y > 550 && y < 580) {
 //                System.out.println("Maximised Window");
 //                simpleWindows.add(simpleWindow);
@@ -160,13 +165,12 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
 
     @Override
     public void handleMouseDragged(int x, int y) {
-        System.out.println("x:" + x + " --- y:" + y);
         if (lastMousePosition == null) {
             lastMousePosition = new Point(this, x, y);
         } else {
             int x2 = x - lastMousePosition.getX();
             int y2 = y - lastMousePosition.getY();
-            if (Math.abs(x2) >= 15 || Math.abs(y2) >= 15) {
+            if (Math.abs(x2) >= 5 || Math.abs(y2) >= 5) {
                 lastMousePosition = new Point(this, x, y);
             } else {
                 System.out.println("lmx:" + lastMousePosition.getX() + " --- lmy:" + lastMousePosition.getY());

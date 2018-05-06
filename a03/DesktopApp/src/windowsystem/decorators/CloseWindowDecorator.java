@@ -5,15 +5,17 @@ import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 import java.awt.*;
 
-public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
-    private AbstractSimpleWindow simpleWindow;
+public abstract class CloseWindowDecorator extends WindowComponent {
+    private WindowComponent simpleWindow;
     private Color crossColor;
     private Coordinates coordinates;
+    private Color color;
 
-    public CloseWindowDecorator(AbstractSimpleWindow simpleWindow, Color color, Color crossColor) {
-        super(simpleWindow.getWindowSystem(), color);
+    public CloseWindowDecorator(WindowComponent simpleWindow, Color color, Color crossColor) {
+        super(simpleWindow.getWindowSystem());
         this.simpleWindow = simpleWindow;
         this.crossColor = crossColor;
+        this.color = color;
     }
 
     public Color getCrossColor() {
@@ -24,7 +26,7 @@ public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
         this.crossColor = crossColor;
     }
 
-    public AbstractSimpleWindow getSimpleWindow() {
+    public WindowComponent getSimpleWindow() {
         return simpleWindow;
     }
 
@@ -50,5 +52,13 @@ public abstract class CloseWindowDecorator extends AbstractSimpleWindow {
     @Override
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TitleBar extends TitleBarDecorator {
-    public TitleBar(AbstractSimpleWindow simpleWindow, Color color, Color activeColor, Color textColor, String title) {
+    public TitleBar(WindowComponent simpleWindow, Color color, Color activeColor, Color textColor, String title) {
         super(simpleWindow, color, activeColor, textColor, title);
     }
 
@@ -64,11 +64,11 @@ public class TitleBar extends TitleBarDecorator {
     @Override
     public void react(Point clickedPoint) {
         if (getCoordinates().contains(clickedPoint)) {
-            List<AbstractSimpleWindow> simpleWindows = new LinkedList<>(getWindowSystem().getSimpleWindows());
+            List<WindowComponent> simpleWindows = new LinkedList<>(getWindowSystem().getSimpleWindows());
             getWindowSystem().getSimpleWindows().removeAll(simpleWindows);
 
-            AbstractSimpleWindow currentSimpleWindow = null;
-            for (AbstractSimpleWindow sw : simpleWindows) {
+            WindowComponent currentSimpleWindow = null;
+            for (WindowComponent sw : simpleWindows) {
                 if (sw.getId() == this.getId()) {
                     currentSimpleWindow = sw;
                 } else {

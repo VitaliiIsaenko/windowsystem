@@ -5,18 +5,12 @@ import windowsystem.contracts.Observer;
 import windowsystem.coordinates.Coordinates;
 import java.awt.*;
 
-public abstract class AbstractSimpleWindow implements Observer {
-    private Color color;
+public abstract class WindowComponent implements Observer {
     private IWindowSystem windowSystem;
     private Coordinates coordinates;
 
-    public AbstractSimpleWindow(IWindowSystem windowSystem, Color color) {
+    public WindowComponent(IWindowSystem windowSystem) {
         this.windowSystem = windowSystem;
-        this.color = color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     abstract public int getId();
@@ -28,10 +22,6 @@ public abstract class AbstractSimpleWindow implements Observer {
     }
 
     public abstract void draw();
-
-    public Color getColor() {
-        return color;
-    }
 
     public Coordinates getCoordinates() {
         return coordinates;

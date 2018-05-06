@@ -1,13 +1,13 @@
 package windowsystem.decorators;
 
-import windowsystem.AbstractSimpleWindow;
+import windowsystem.WindowComponent;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
 public class Minimize extends MinimizeDecorator {
-    public Minimize(AbstractSimpleWindow simpleWindow, Color color) {
+    public Minimize(WindowComponent simpleWindow, Color color) {
         super(simpleWindow, color);
     }
 
@@ -42,7 +42,7 @@ public class Minimize extends MinimizeDecorator {
     public void react(Point clickedPoint) {
         if (getCoordinates().contains(clickedPoint)) {
             System.out.println("crazy");
-            for (AbstractSimpleWindow sw : getWindowSystem().getSimpleWindows()) {
+            for (WindowComponent sw : getWindowSystem().getSimpleWindows()) {
                 if (getId() == sw.getId()) {
                     setExpandedWindow(sw);
                     getWindowSystem().getSimpleWindows().remove(sw);

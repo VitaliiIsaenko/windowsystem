@@ -1,25 +1,24 @@
 package windowsystem.decorators;
 
-import windowsystem.AbstractSimpleWindow;
-import windowsystem.contracts.IWindowSystem;
+import windowsystem.WindowComponent;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
-public abstract class MinimizeDecorator extends AbstractSimpleWindow {
-    private AbstractSimpleWindow simpleWindow;
+public abstract class MinimizeDecorator extends WindowComponent {
+    private WindowComponent simpleWindow;
     private Coordinates expandedWindowCoordinates;
     private Color color;
-    private AbstractSimpleWindow expandedWindow;
+    private WindowComponent expandedWindow;
 
-    public MinimizeDecorator(AbstractSimpleWindow simpleWindow, Color color) {
-        super(simpleWindow.getWindowSystem(), color);
+    public MinimizeDecorator(WindowComponent simpleWindow, Color color) {
+        super(simpleWindow.getWindowSystem());
         this.simpleWindow = simpleWindow;
         this.color = color;
     }
 
-    public AbstractSimpleWindow getSimpleWindow() {
+    public WindowComponent getSimpleWindow() {
         return simpleWindow;
     }
 
@@ -41,21 +40,19 @@ public abstract class MinimizeDecorator extends AbstractSimpleWindow {
     public void react(Point clickedPoint, Point toMove) { getSimpleWindow().react(clickedPoint,toMove);
     }
 
-    @Override
     public Color getColor() {
         return color;
     }
 
-    @Override
     public void setColor(Color color) {
         this.color = color;
     }
 
-    public AbstractSimpleWindow getExpandedWindow() {
+    public WindowComponent getExpandedWindow() {
         return expandedWindow;
     }
 
-    public void setExpandedWindow(AbstractSimpleWindow expandedWindow) {
+    public void setExpandedWindow(WindowComponent expandedWindow) {
         this.expandedWindow = expandedWindow;
     }
 }

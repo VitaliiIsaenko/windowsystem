@@ -8,7 +8,7 @@ import windowsystem.coordinates.Point;
 import java.awt.*;
 
 public class CloseWindow extends CloseWindowDecorator {
-    public CloseWindow(AbstractSimpleWindow simpleWindow, Color color, Color crossColor) {
+    public CloseWindow(WindowComponent simpleWindow, Color color, Color crossColor) {
         super(simpleWindow, color, crossColor);
     }
 
@@ -17,7 +17,7 @@ public class CloseWindow extends CloseWindowDecorator {
         getSimpleWindow().draw();
 
         IWindowSystem ws = getWindowSystem();
-        AbstractSimpleWindow simpleWindow = getSimpleWindow();
+        WindowComponent simpleWindow = getSimpleWindow();
         // Adding close button to the window
         Point exitStartPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
         windowsystem.coordinates.Point exitEndPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
