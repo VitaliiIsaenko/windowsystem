@@ -61,6 +61,14 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         return simpleWindow.getId();
     }
 
+    public void addMinimizedSimpleWindow(AbstractSimpleWindow simpleWindow) {
+        minimisedSimpleWindows.add(simpleWindow);
+    }
+
+    public void removeMinimizedSimpleWindow(AbstractSimpleWindow simpleWindow) {
+        minimisedSimpleWindows.remove(simpleWindow);
+    }
+
     /**
      * Removes window from the window system
      *

@@ -15,7 +15,7 @@ public class Minimize extends MinimizeDecorator {
     public void draw() {
         getSimpleWindow().draw();
 
-        if (getExpandedWindowCoordinates() == null) {
+        if (getExpandedWindow() == null) {
             // Adding minimise button to the window
             setCoordinates(new Coordinates(
                     new Point(getWindowSystem(),
@@ -44,7 +44,9 @@ public class Minimize extends MinimizeDecorator {
             System.out.println("crazy");
             for (AbstractSimpleWindow sw : getWindowSystem().getSimpleWindows()) {
                 if (getId() == sw.getId()) {
-                    setExpandedWindowCoordinates(sw.getCoordinates());
+                    setExpandedWindow(sw);
+                    getWindowSystem().getSimpleWindows().remove(sw);
+                    getWindowSystem().addMinimizedSimpleWindow(sw);
                     break;
                 }
             }

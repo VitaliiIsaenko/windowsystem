@@ -11,7 +11,7 @@ public abstract class MinimizeDecorator extends AbstractSimpleWindow {
     private AbstractSimpleWindow simpleWindow;
     private Coordinates expandedWindowCoordinates;
     private Color color;
-    private Coordinates coordinates;
+    private AbstractSimpleWindow expandedWindow;
 
     public MinimizeDecorator(AbstractSimpleWindow simpleWindow, Color color) {
         super(simpleWindow.getWindowSystem(), color);
@@ -41,14 +41,6 @@ public abstract class MinimizeDecorator extends AbstractSimpleWindow {
     public void react(Point clickedPoint, Point toMove) { getSimpleWindow().react(clickedPoint,toMove);
     }
 
-    public Coordinates getExpandedWindowCoordinates() {
-        return expandedWindowCoordinates;
-    }
-
-    public void setExpandedWindowCoordinates(Coordinates expandedWindowCoordinates) {
-        this.expandedWindowCoordinates = expandedWindowCoordinates;
-    }
-
     @Override
     public Color getColor() {
         return color;
@@ -59,11 +51,11 @@ public abstract class MinimizeDecorator extends AbstractSimpleWindow {
         this.color = color;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+    public AbstractSimpleWindow getExpandedWindow() {
+        return expandedWindow;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public void setExpandedWindow(AbstractSimpleWindow expandedWindow) {
+        this.expandedWindow = expandedWindow;
     }
 }
