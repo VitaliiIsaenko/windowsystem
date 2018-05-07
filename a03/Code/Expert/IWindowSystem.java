@@ -1,9 +1,3 @@
-package windowsystem.contracts;
-
-import windowsystem.WindowComponent;
-import windowsystem.coordinates.Coordinates;
-import windowsystem.coordinates.Point;
-
 import java.awt.*;
 import java.util.List;
 
@@ -29,9 +23,7 @@ public interface IWindowSystem {
 
     void removeWindow(int id);
 
-    void addWindow(int width, int height, String title);
-
-    void addWindow(WindowComponent windowComponent);
+    int addWindow(WindowComponent simpleWindow);
 
     void requestRepaint();
 }

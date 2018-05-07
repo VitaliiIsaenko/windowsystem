@@ -1,10 +1,4 @@
-package windowsystem;
-
 import de.rwth.hci.Graphics.GraphicsEventSystem;
-import windowsystem.contracts.IWindowManager;
-import windowsystem.contracts.IWindowSystem;
-import windowsystem.coordinates.Coordinates;
-import windowsystem.coordinates.Point;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -55,28 +49,15 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         return windows;
     }
 
-    public void addWindow(WindowComponent windowComponent) {
-        windows.add(windowComponent);
-    }
-
-    public void addWindow(int width, int height, String title) {
-        if (width + 20 > getWidth() || height + 20 > getHeight()) {
-            throw new IllegalArgumentException("Size of the window should be less than size of desktop");
-        }
-        Point startPoint = new windowsystem.coordinates.Point(this, (getWindows().size() + 1) * 30,
-                (getWindows().size() + 1) * 30);
-        Point endPoint = new windowsystem.coordinates.Point(this, width + startPoint.getX(), height + startPoint.getY());
-        Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
-
-        SimpleWindow simpleWindow = new SimpleWindow(this, simpleWindowCoordinates, Color.BLACK);
-        simpleWindow.setId(getNextWindowId());
-        if (windowManager != null) {
-            WindowComponent simpleWindowDecorated = windowManager.decorateWindow(simpleWindow, title);
-            windows.add(simpleWindowDecorated);
-        }
-        else {
-            windows.add(simpleWindow);
-        }
+    /**
+     * Adds window to the window system
+     *
+     * @param window window to add
+     */
+    public int addWindow(WindowComponent window) {
+        window.setId(getNextWindowId());
+        windows.add(window);
+        return window.getId();
     }
 
     /**
