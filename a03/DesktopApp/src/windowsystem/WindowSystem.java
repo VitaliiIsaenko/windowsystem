@@ -19,6 +19,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
 
     private int width;
     private int height;
+    private Color color;
 
     private Point lastMousePosition;
 
@@ -27,11 +28,13 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      *
      * @param width  width of the window system
      * @param height height of the window system
+     * @param color  background color of the system
      */
-    public WindowSystem(int width, int height) {
+    public WindowSystem(int width, int height, Color color) {
         super(width, height);
         this.width = width;
         this.height = height;
+        this.color = color;
 
         windows = new LinkedList<>();
     }
@@ -71,7 +74,10 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
     public void removeWindow(int id) {
         windows.remove(findWindow(id));
         for (WindowComponent sw : windows) {
-            sw.setId(sw.getId() - 1);
+            sw.setId(0);
+        }
+        for (WindowComponent sw : windows) {
+            sw.setId(getNextWindowId());
         }
         requestRepaint();
     }
@@ -113,7 +119,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      */
     @Override
     protected void handlePaint() {
-        setBackground(Color.PINK);
+        setBackground(color);
 
         for (int i = 0; i < windows.size(); i++) {
             WindowComponent simpleWindow = windows.get(i);
@@ -192,7 +198,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
      * @param text          text to draw
      * @param startingPoint starting point of the string drawing
      */
-    public void drawString(String text, windowsystem.coordinates.Point startingPoint) {
+    public void drawString(String text, Point startingPoint) {
         drawString(text, startingPoint.getX(), startingPoint.getY());
     }
 

@@ -32,6 +32,7 @@ public class Close extends CloseDecorator {
         ws.drawRect(getCoordinates());
         ws.fillRect(getCoordinates());
 
+        //Add cross to the close button
         ws.setColor(getCrossColor());
         ws.drawLine(getCoordinates());
         Coordinates exitLineCoordinates = new Coordinates(

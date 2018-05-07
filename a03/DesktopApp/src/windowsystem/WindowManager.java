@@ -69,11 +69,12 @@ public class WindowManager implements IWindowManager {
         Point endPoint = new windowsystem.coordinates.Point(windowSystem, width + startPoint.getX(), height + startPoint.getY());
         Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
 
-        WindowComponent simpleWindow = new Minimize(new Close(
-                new TitleBar(
-                        new SimpleWindow(windowSystem, simpleWindowCoordinates, Color.BLACK),
-                        title, Color.WHITE, Color.CYAN, Color.BLACK),
-                Color.RED, Color.BLACK), Color.GREEN, Color.YELLOW);
+        WindowComponent simpleWindow = new Minimize(
+                new Close(
+                        new TitleBar(
+                                new SimpleWindow(windowSystem, simpleWindowCoordinates, Color.BLACK),
+                                title, Color.WHITE, Color.CYAN, Color.BLACK),
+                        Color.RED, Color.BLACK), Color.GREEN, Color.YELLOW);
 
         windowSystem.addWindow(simpleWindow);
     }
