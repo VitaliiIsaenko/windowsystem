@@ -3,8 +3,10 @@ package windowsystem;
 import windowsystem.contracts.IWindowSystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
+import windowsystem.rat.RATWidget;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * Window representation
@@ -12,6 +14,7 @@ import java.awt.Color;
 public class SimpleWindow extends WindowComponent {
     private int id;
     private Color color;
+    private List<RATWidget> widgets;
 
     public SimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
         super(windowSystem);
@@ -23,6 +26,11 @@ public class SimpleWindow extends WindowComponent {
         getWindowSystem().setColor(getColor());
         getWindowSystem().drawRect(getCoordinates());
         getWindowSystem().fillRect(getCoordinates());
+    }
+
+    public void addWidget(RATWidget widget) {
+        this.widgets.add(widget);
+        getWindowSystem().requestRepaint();
     }
 
     @Override

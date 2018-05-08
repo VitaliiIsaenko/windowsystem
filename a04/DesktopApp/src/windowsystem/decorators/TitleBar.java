@@ -26,8 +26,8 @@ public class TitleBar extends TitleBarDecorator {
 
         IWindowSystem ws = getWindowComponent().getWindowSystem();
 
-        windowsystem.coordinates.Point titleStartPoint = getWindowComponent().getCoordinates().getStartPoint();
-        windowsystem.coordinates.Point titleEndPoint = new windowsystem.coordinates.Point(ws,
+        Point titleStartPoint = getWindowComponent().getCoordinates().getStartPoint();
+        Point titleEndPoint = new windowsystem.coordinates.Point(ws,
                 getWindowComponent().getCoordinates().getEndPoint().getX(),
                 getWindowComponent().getCoordinates().getStartPoint().getY() + 15);
         setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
