@@ -7,15 +7,15 @@ public abstract class RATWidget {
 
     public abstract void draw();
 
-    public void addMouseClickListener(RATMouseListener mouseListener) {
+    public void addActionListener(RATMouseListener mouseListener) {
         listeners.add(mouseListener);
     }
 
-    public void removeMouseClickListener(RATMouseListener mouseListener){
+    public void removeActionListener(RATMouseListener mouseListener){
         listeners.remove(mouseListener);
     }
 
-    public void mouseClicked(RATActionEvent ae) {
+    public void notifyListeners(RATActionEvent ae) {
         for (RATMouseListener mouseListener :
                 listeners) {
             mouseListener.mouseClicked(ae);
