@@ -56,6 +56,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
     }
 
     public void addWindow(WindowComponent windowComponent) {
+        windowComponent.setId(getNextWindowId());
         windows.add(windowComponent);
     }
 
