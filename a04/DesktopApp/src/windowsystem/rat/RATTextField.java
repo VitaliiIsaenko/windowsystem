@@ -1,15 +1,15 @@
 package windowsystem.rat;
 
-import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
 
 import java.awt.*;
 
-public class RATButton extends RATLabel {
+public class RATTextField extends RATLabel {
     private Color backgroundColor;
     private Color borderColor;
 
-    public RATButton(Coordinates coordinates, String text, Color backgroundColor, Color borderColor) {
-        super(coordinates.getStartPoint(), text);
+    public RATTextField(Point point, String text, Color backgroundColor, Color borderColor) {
+        super(point, text);
         this.backgroundColor = backgroundColor;
         this.borderColor = borderColor;
     }

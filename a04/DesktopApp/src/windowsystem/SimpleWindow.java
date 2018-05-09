@@ -26,6 +26,11 @@ public class SimpleWindow extends WindowComponent {
         getWindowSystem().setColor(getColor());
         getWindowSystem().drawRect(getCoordinates());
         getWindowSystem().fillRect(getCoordinates());
+
+//        for (RATWidget widget :
+//                widgets) {
+//            widget.draw();
+//        }
     }
 
     public void addWidget(RATWidget widget) {

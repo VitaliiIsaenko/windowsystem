@@ -1,5 +1,8 @@
 package windowsystem;
 
+import windowsystem.rat.RATButton;
+import windowsystem.rat.RATWidget;
+
 import java.awt.*;
 
 /**
@@ -14,6 +17,11 @@ public class MyApp {
         ws.addWindow(250, 250, "Window 1");
         ws.addWindow(250, 250, "Window 2");
         ws.addWindow(250, 250, "Window 3");
+
+//        RATWidget ratWidget = new RATButton();
+//        ratWidget.addActionListener((dfdf) -> {
+//            System.out.println("Hello");
+//        });
 
     }
 }

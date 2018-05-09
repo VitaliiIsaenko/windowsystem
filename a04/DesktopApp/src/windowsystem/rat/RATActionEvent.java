@@ -1,4 +1,4 @@
 package windowsystem.rat;
 
-public class RATActionEvent {
+public class RATActionEvent  {
 }
