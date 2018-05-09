@@ -20,4 +20,12 @@ public class RATLabel extends RATWidget {
         getSimpleWindow().getWindowSystem().setColor(textColor);
         getSimpleWindow().getWindowSystem().drawString(text, new Point(getCoordinates().getStartPoint().getX()+3,getCoordinates().getStartPoint().getY()+15));
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

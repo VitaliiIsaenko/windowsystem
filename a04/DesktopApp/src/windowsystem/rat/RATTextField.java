@@ -17,10 +17,15 @@ public class RATTextField extends RATLabel {
 
     @Override
     public void draw() {
-        super.draw();
+        Coordinates windowSystemBasedCoordinates = getWindowSystemBasedCoordinates();
+        windowSystemBasedCoordinates.setEndPoint(new Point(
+                windowSystemBasedCoordinates.getStartPoint().getX() + 130,
+                windowSystemBasedCoordinates.getStartPoint().getY() + 25));
+
         getSimpleWindow().getWindowSystem().setColor(borderColor);
         getSimpleWindow().getWindowSystem().drawRect(getCoordinates());
         getSimpleWindow().getWindowSystem().setColor(backgroundColor);
         getSimpleWindow().getWindowSystem().fillRect(getCoordinates());
+        super.draw();
     }
 }
