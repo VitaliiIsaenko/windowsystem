@@ -6,6 +6,7 @@ import windowsystem.coordinates.Point;
 import windowsystem.rat.RATWidget;
 
 import java.awt.Color;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class SimpleWindow extends WindowComponent {
         super(windowSystem);
         setCoordinates(coordinates);
         this.color = color;
+        widgets = new LinkedList<>();
     }
 
     public void draw() {
@@ -27,14 +29,15 @@ public class SimpleWindow extends WindowComponent {
         getWindowSystem().drawRect(getCoordinates());
         getWindowSystem().fillRect(getCoordinates());
 
-//        for (RATWidget widget :
-//                widgets) {
-//            widget.draw();
-//        }
+        for (RATWidget widget :
+                widgets) {
+            widget.draw();
+        }
     }
 
     public void addWidget(RATWidget widget) {
         this.widgets.add(widget);
+        widget.setSimpleWindow(this);
         getWindowSystem().requestRepaint();
     }
 

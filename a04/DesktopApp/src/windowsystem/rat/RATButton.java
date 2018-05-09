@@ -9,7 +9,7 @@ public class RATButton extends RATLabel {
     private Color borderColor;
 
     public RATButton(Coordinates coordinates, String text, Color backgroundColor, Color borderColor) {
-        super(coordinates.getStartPoint(), text);
+        super(coordinates, text);
         this.backgroundColor = backgroundColor;
         this.borderColor = borderColor;
     }

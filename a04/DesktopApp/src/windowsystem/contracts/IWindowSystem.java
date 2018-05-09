@@ -1,5 +1,6 @@
 package windowsystem.contracts;
 
+import windowsystem.SimpleWindow;
 import windowsystem.WindowComponent;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
@@ -29,7 +30,7 @@ public interface IWindowSystem {
 
     void removeWindow(int id);
 
-    void addWindow(int width, int height, String title);
+    SimpleWindow addWindow(int width, int height, String title);
 
     void addWindow(WindowComponent windowComponent);
 

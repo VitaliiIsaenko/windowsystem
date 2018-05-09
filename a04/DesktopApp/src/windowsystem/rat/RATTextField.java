@@ -1,5 +1,6 @@
 package windowsystem.rat;
 
+import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 
 import java.awt.*;
@@ -8,8 +9,8 @@ public class RATTextField extends RATLabel {
     private Color backgroundColor;
     private Color borderColor;
 
-    public RATTextField(Point point, String text, Color backgroundColor, Color borderColor) {
-        super(point, text);
+    public RATTextField(Coordinates coordinates, String text, Color backgroundColor, Color borderColor) {
+        super(coordinates, text);
         this.backgroundColor = backgroundColor;
         this.borderColor = borderColor;
     }
