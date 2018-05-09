@@ -26,10 +26,12 @@ public class TitleBar extends TitleBarDecorator {
 
         IWindowSystem ws = getWindowComponent().getWindowSystem();
 
-        Point titleStartPoint = getWindowComponent().getCoordinates().getStartPoint();
-        Point titleEndPoint = new windowsystem.coordinates.Point(
+        Point titleStartPoint = new Point(
+                getWindowComponent().getCoordinates().getStartPoint().getX(),
+                getWindowComponent().getCoordinates().getStartPoint().getY() - 15);
+        Point titleEndPoint = new Point(
                 getWindowComponent().getCoordinates().getEndPoint().getX(),
-                getWindowComponent().getCoordinates().getStartPoint().getY() + 15);
+                getWindowComponent().getCoordinates().getStartPoint().getY());
         setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
 
         //Set color of the title bar depending on state of the window (active/not active)
