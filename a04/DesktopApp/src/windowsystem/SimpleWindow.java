@@ -19,9 +19,10 @@ public class SimpleWindow extends WindowComponent {
 
     public SimpleWindow(IWindowSystem windowSystem, Coordinates coordinates, Color color) {
         super(windowSystem);
+        widgets = new LinkedList<>();
         setCoordinates(coordinates);
         this.color = color;
-        widgets = new LinkedList<>();
+
     }
 
     public void draw() {
@@ -43,6 +44,12 @@ public class SimpleWindow extends WindowComponent {
 
     @Override
     public void react(Point clickedPoint) {
+        for (RATWidget widget :
+                widgets) {
+            if (widget.getCoordinates().contains(clickedPoint)) {
+                widget.clicked();
+            }
+        }
     }
 
     @Override
@@ -65,5 +72,14 @@ public class SimpleWindow extends WindowComponent {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public void setCoordinates(Coordinates coordinates) {
+        super.setCoordinates(coordinates);
+        for (RATWidget widget :
+                widgets) {
+//            widget.
+        }
     }
 }

@@ -33,7 +33,6 @@ public class WindowManager implements IWindowManager {
         for (int i = 0; i < windowSystem.getWindows().size(); i++) {
             windowSystem.getWindows().get(i).react(point);
         }
-        windowSystem.requestRepaint();
     }
 
     /**
@@ -47,7 +46,6 @@ public class WindowManager implements IWindowManager {
         for (int i = 0; i < windowSystem.getWindows().size(); i++) {
             windowSystem.getWindows().get(i).react(clickedPoint, toMove);
         }
-        windowSystem.requestRepaint();
     }
 
     @Override

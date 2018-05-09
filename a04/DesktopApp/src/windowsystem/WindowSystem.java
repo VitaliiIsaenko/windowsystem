@@ -150,6 +150,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
     @Override
     public void handleMouseClicked(int x, int y) {
         windowManager.handleMouseClicked(new Point(x, y));
+        requestRepaint();
     }
 
     /**
@@ -169,6 +170,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
                 lastMousePosition = new Point(x, y);
             } else {
                 windowManager.handleMouseDragged(new Point(x, y), new Point(x2, y2));
+                requestRepaint();
             }
         }
     }

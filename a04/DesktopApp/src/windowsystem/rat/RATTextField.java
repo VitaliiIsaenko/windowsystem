@@ -9,8 +9,8 @@ public class RATTextField extends RATLabel {
     private Color backgroundColor;
     private Color borderColor;
 
-    public RATTextField(Coordinates coordinates, String text, Color backgroundColor, Color borderColor) {
-        super(coordinates, text);
+    public RATTextField(Point startingPoint, String text, Color backgroundColor, Color borderColor, Color textColor) {
+        super(startingPoint, text, textColor);
         this.backgroundColor = backgroundColor;
         this.borderColor = borderColor;
     }

@@ -33,7 +33,7 @@ public abstract class WindowComponent {
         this.coordinates = coordinates;
     }
 
-    abstract public void react(windowsystem.coordinates.Point clickedPoint);
+    abstract public void react(Point clickedPoint);
 
-    abstract public void react(windowsystem.coordinates.Point clickedPoint, Point toMove);
+    abstract public void react(Point clickedPoint, Point toMove);
 }

@@ -2,6 +2,7 @@ package windowsystem.rat;
 
 import windowsystem.SimpleWindow;
 import windowsystem.coordinates.Coordinates;
+import windowsystem.coordinates.Point;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,33 +10,22 @@ import java.util.List;
 public abstract class RATWidget {
     private SimpleWindow simpleWindow;
     private List<RATMouseListener> listeners;
-    private Coordinates coordinates;
+    private Coordinates windowSystemBasedCoordinates;
 
-    public RATWidget(Coordinates coordinates){
-        this.coordinates = coordinates;
+    public RATWidget(Point startingPoint) {
+        this.windowSystemBasedCoordinates = new Coordinates(startingPoint, null);
         this.listeners = new LinkedList<>();
     }
 
     public void draw() {
-        if (coordinates == null) {
-            throw new IllegalArgumentException("Coordinates object should be valid");
-        }
-        if (coordinates.getStartPoint() == null) {
-            throw new IllegalArgumentException("Coordinates object should be valid");
-        }
-        coordinates.getStartPoint().setX(coordinates.getStartPoint().getX() + simpleWindow.getCoordinates().getStartPoint().getX());
-        coordinates.getStartPoint().setY(coordinates.getStartPoint().getY() + simpleWindow.getCoordinates().getStartPoint().getY());
-        if (coordinates.getEndPoint() != null) {
-            coordinates.getEndPoint().setX(coordinates.getStartPoint().getX() + simpleWindow.getCoordinates().getStartPoint().getX());
-            coordinates.getEndPoint().setY(coordinates.getStartPoint().getY() + simpleWindow.getCoordinates().getStartPoint().getY());
-        }
-    };
+
+    }
 
     public void addActionListener(RATMouseListener mouseListener) {
         listeners.add(mouseListener);
     }
 
-    public void removeActionListener(RATMouseListener mouseListener){
+    public void removeActionListener(RATMouseListener mouseListener) {
         listeners.remove(mouseListener);
     }
 
@@ -44,6 +34,13 @@ public abstract class RATWidget {
                 listeners) {
             mouseListener.mouseClicked(ae);
         }
+    }
+    
+    public void clicked() {
+        for (RATMouseListener listener :
+                listeners) {
+            listener.mouseClicked(null);
+        }   
     }
 
     public SimpleWindow getSimpleWindow() {
@@ -54,11 +51,32 @@ public abstract class RATWidget {
         this.simpleWindow = simpleWindow;
     }
 
+
     public Coordinates getCoordinates() {
-        return coordinates;
+        if (windowSystemBasedCoordinates == null) {
+            throw new IllegalArgumentException("Coordinates object should be valid");
+        }
+        if (windowSystemBasedCoordinates.getStartPoint() == null) {
+            throw new IllegalArgumentException("Coordinates object should be valid");
+        }
+        Coordinates simpleWindowBasedCoordinates = new Coordinates(new Point(
+                windowSystemBasedCoordinates.getStartPoint().getX() + simpleWindow.getCoordinates().getStartPoint().getX(),
+                windowSystemBasedCoordinates.getStartPoint().getY() + simpleWindow.getCoordinates().getStartPoint().getY()),
+                null
+        );
+
+        simpleWindowBasedCoordinates.getStartPoint().setX(windowSystemBasedCoordinates.getStartPoint().getX() + simpleWindow.getCoordinates().getStartPoint().getX());
+        simpleWindowBasedCoordinates.getStartPoint().setY(windowSystemBasedCoordinates.getStartPoint().getY() + simpleWindow.getCoordinates().getStartPoint().getY());
+        if (windowSystemBasedCoordinates.getEndPoint() != null) {
+            simpleWindowBasedCoordinates.setEndPoint(new Point(
+                    windowSystemBasedCoordinates.getEndPoint().getX() + simpleWindow.getCoordinates().getStartPoint().getX(),
+                    windowSystemBasedCoordinates.getEndPoint().getY() + simpleWindow.getCoordinates().getStartPoint().getY()
+            ));
+        }
+        return simpleWindowBasedCoordinates;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public Coordinates getWindowSystemBasedCoordinates() {
+        return windowSystemBasedCoordinates;
     }
 }

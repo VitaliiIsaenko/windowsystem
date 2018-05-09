@@ -20,7 +20,7 @@ public class MyApp {
         SimpleWindow window2 = ws.addWindow(250, 250, "Window 2");
         SimpleWindow window3 = ws.addWindow(250, 250, "Window 3");
 
-        RATWidget ratWidget = new RATButton(new Coordinates(new Point(5,5), new Point(10,10)), "Hello", Color.WHITE, Color.WHITE);
+        RATWidget ratWidget = new RATButton(new Point(5,5), "Hello", Color.LIGHT_GRAY, Color.WHITE, Color.BLACK);
         ratWidget.addActionListener((dfdf) -> {
             System.out.println("Hello");
         });
