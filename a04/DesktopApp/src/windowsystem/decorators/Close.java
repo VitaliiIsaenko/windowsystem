@@ -25,8 +25,8 @@ public class Close extends CloseDecorator {
         IWindowSystem ws = getWindowSystem();
         WindowComponent simpleWindow = getWindowComponent();
         // Adding close button to the window
-        Point exitStartPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
-        windowsystem.coordinates.Point exitEndPoint = new windowsystem.coordinates.Point(ws, simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
+        Point exitStartPoint = new windowsystem.coordinates.Point(simpleWindow.getCoordinates().getEndPoint().getX() - 15, simpleWindow.getCoordinates().getStartPoint().getY());
+        windowsystem.coordinates.Point exitEndPoint = new windowsystem.coordinates.Point( simpleWindow.getCoordinates().getEndPoint().getX(), simpleWindow.getCoordinates().getStartPoint().getY() + 15);
         setCoordinates(new Coordinates(exitStartPoint, exitEndPoint));
         ws.setColor(getColor());
         ws.drawRect(getCoordinates());
@@ -36,8 +36,8 @@ public class Close extends CloseDecorator {
         ws.setColor(getCrossColor());
         ws.drawLine(getCoordinates());
         Coordinates exitLineCoordinates = new Coordinates(
-                new Point(ws, getCoordinates().getStartPoint().getX(), getCoordinates().getStartPoint().getY() + 15),
-                new Point(ws, getCoordinates().getEndPoint().getX(), getCoordinates().getStartPoint().getY()));
+                new Point(getCoordinates().getStartPoint().getX(), getCoordinates().getStartPoint().getY() + 15),
+                new Point(getCoordinates().getEndPoint().getX(), getCoordinates().getStartPoint().getY()));
         ws.drawLine(exitLineCoordinates);
     }
 

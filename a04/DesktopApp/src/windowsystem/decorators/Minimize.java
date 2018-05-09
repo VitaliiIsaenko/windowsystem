@@ -22,10 +22,10 @@ public class Minimize extends MinimizeDecorator {
         if (!isMinimized()) {
             getSimpleWindow().draw();
             setCoordinates(new Coordinates(
-                    new Point(getWindowSystem(),
+                    new Point(
                             getSimpleWindow().getCoordinates().getEndPoint().getX() - 30,
                             getSimpleWindow().getCoordinates().getStartPoint().getY()),
-                    new Point(getWindowSystem(),
+                    new Point(
                             getSimpleWindow().getCoordinates().getEndPoint().getX() - 15,
                             getSimpleWindow().getCoordinates().getStartPoint().getY() + 15)));
             getWindowSystem().setColor(getColor());
@@ -33,8 +33,8 @@ public class Minimize extends MinimizeDecorator {
             getWindowSystem().fillRect(getCoordinates());
         } else {
             Coordinates minimizeWindow = new Coordinates(
-                    new Point(getWindowSystem(), 50 * getId(), 550),
-                    new Point(getWindowSystem(), 50 * getId() + 50, 580)
+                    new Point( 50 * getId(), 550),
+                    new Point( 50 * getId() + 50, 580)
             );
             setCoordinates(minimizeWindow);
             getWindowSystem().setColor(getMinimizedColor());

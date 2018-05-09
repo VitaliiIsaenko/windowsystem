@@ -63,9 +63,9 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         if (width + 20 > getWidth() || height + 20 > getHeight()) {
             throw new IllegalArgumentException("Size of the window should be less than size of desktop");
         }
-        Point startPoint = new windowsystem.coordinates.Point(this, (getWindows().size() + 1) * 30,
+        Point startPoint = new windowsystem.coordinates.Point( (getWindows().size() + 1) * 30,
                 (getWindows().size() + 1) * 30);
-        Point endPoint = new windowsystem.coordinates.Point(this, width + startPoint.getX(), height + startPoint.getY());
+        Point endPoint = new windowsystem.coordinates.Point( width + startPoint.getX(), height + startPoint.getY());
         Coordinates simpleWindowCoordinates = new Coordinates(startPoint, endPoint);
 
         SimpleWindow simpleWindow = new SimpleWindow(this, simpleWindowCoordinates, Color.BLACK);
@@ -151,7 +151,7 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
         System.out.println("Mouse clicked at x:" + x + " - y:" + y);
         System.out.println(windows);
 
-        windowManager.handleMouseClicked(new Point(this, x, y));
+        windowManager.handleMouseClicked(new Point( x, y));
     }
 
     /**
@@ -163,14 +163,14 @@ public class WindowSystem extends GraphicsEventSystem implements IWindowSystem {
     @Override
     public void handleMouseDragged(int x, int y) {
         if (lastMousePosition == null) {
-            lastMousePosition = new Point(this, x, y);
+            lastMousePosition = new Point( x, y);
         } else {
             int x2 = x - lastMousePosition.getX();
             int y2 = y - lastMousePosition.getY();
             if (Math.abs(x2) >= 5 || Math.abs(y2) >= 5) {
-                lastMousePosition = new Point(this, x, y);
+                lastMousePosition = new Point( x, y);
             } else {
-                windowManager.handleMouseDragged(new Point(this, x, y), new Point(this, x2, y2));
+                windowManager.handleMouseDragged(new Point( x, y), new Point( x2, y2));
             }
         }
     }

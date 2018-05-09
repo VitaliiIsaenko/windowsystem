@@ -27,7 +27,7 @@ public class TitleBar extends TitleBarDecorator {
         IWindowSystem ws = getWindowComponent().getWindowSystem();
 
         Point titleStartPoint = getWindowComponent().getCoordinates().getStartPoint();
-        Point titleEndPoint = new windowsystem.coordinates.Point(ws,
+        Point titleEndPoint = new windowsystem.coordinates.Point(
                 getWindowComponent().getCoordinates().getEndPoint().getX(),
                 getWindowComponent().getCoordinates().getStartPoint().getY() + 15);
         setCoordinates(new Coordinates(titleStartPoint, titleEndPoint));
@@ -42,7 +42,7 @@ public class TitleBar extends TitleBarDecorator {
         ws.fillRect(getCoordinates());
 
         ws.setColor(getTextColor());
-        Point titleTextStartPoint = new Point(getWindowComponent().getWindowSystem(),
+        Point titleTextStartPoint = new Point(
                 getCoordinates().getStartPoint().getX(),
                 getCoordinates().getStartPoint().getY() + 10);
         ws.drawString(getTitle(), titleTextStartPoint);
@@ -63,8 +63,8 @@ public class TitleBar extends TitleBarDecorator {
             int newEndX = getWindowComponent().getCoordinates().getEndPoint().getX() + toMove.getX();
             int newEndY = getWindowComponent().getCoordinates().getEndPoint().getY() + toMove.getY();
             getWindowComponent().setCoordinates(new Coordinates(
-                    new Point(getWindowSystem(), newStartX, newStartY),
-                    new Point(getWindowSystem(), newEndX, newEndY)
+                    new Point( newStartX, newStartY),
+                    new Point( newEndX, newEndY)
             ));
         } else {
             getWindowComponent().react(clickedPoint, toMove);
