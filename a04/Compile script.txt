@@ -1,0 +1,6 @@
+GES should be in the same folder you are currently in
+
+javac -cp GES.jar group10/Code/Expert/*.java
+java -cp GES.jar;group10/Code/Expert/ MyApp
+
+*for MacOS ";" should be replaced with ":"
