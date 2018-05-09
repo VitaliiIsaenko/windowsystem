@@ -3,6 +3,7 @@ package windowsystem;
 import windowsystem.coordinates.Coordinates;
 import windowsystem.coordinates.Point;
 import windowsystem.rat.RATButton;
+import windowsystem.rat.RATLabel;
 import windowsystem.rat.RATTextField;
 import windowsystem.rat.RATWidget;
 
@@ -35,6 +36,10 @@ public class MyApp {
         window1.addWidget(textField);
 
         RATButton button3 = new RATButton(new Point(5,5), "Click!", Color.LIGHT_GRAY, Color.WHITE, Color.BLACK);
+
         window2.addWidget(button3);
+
+        RATLabel label = new RATLabel(new Point(5,5), "Just Label", Color.GREEN);
+        window3.addWidget(label);
     }
 }

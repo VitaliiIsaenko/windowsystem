@@ -43,9 +43,11 @@ public class Coordinates {
      */
     public boolean contains(Point point) {
         boolean contains = false;
-        if (getStartPoint().getX() < point.getX() && point.getX() < getEndPoint().getX() &&
-                getStartPoint().getY() < point.getY() && point.getY() < getEndPoint().getY()) {
-            contains = true;
+        if (endPoint != null && startPoint != null) {
+            if (getStartPoint().getX() < point.getX() && point.getX() < getEndPoint().getX() &&
+                    getStartPoint().getY() < point.getY() && point.getY() < getEndPoint().getY()) {
+                contains = true;
+            }
         }
         return contains;
     }
