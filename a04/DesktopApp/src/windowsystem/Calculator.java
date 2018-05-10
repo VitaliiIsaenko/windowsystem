@@ -70,7 +70,7 @@ public class Calculator {
 
     private void initActionButtons(SimpleWindow calculatorWindow){
         // Init all mathematical actions
-        String [] actions = {"*","+","-","/"};
+        String [] actions = {"*","+","-","/","%"};
         for(int iteration = 0;iteration < actions.length;iteration++){
             RATButton actionButton;
             actionButton = new RATButton(new Point(3 * 50,iteration * 30 + 100),
@@ -162,6 +162,9 @@ public class Calculator {
                 break;
             case "/":
                 result = getResult() / getChosenNumber();
+                break;
+            case "%":
+                result = getResult() % getChosenNumber();
                 break;
             default:
                 result = getResult() * getChosenNumber();
