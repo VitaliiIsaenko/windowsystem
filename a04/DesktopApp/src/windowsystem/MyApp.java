@@ -41,5 +41,14 @@ public class MyApp {
 
         RATLabel label = new RATLabel(new Point(5,5), "Just Label", Color.GREEN);
         window3.addWidget(label);
+
+
+
+        // Expert Program: Calculator
+
+        // Creating the calculator window
+        SimpleWindow calculatorWindow = ws.addWindow(200, 200, "Calculator");
+        // Attach the calculator to the window;
+        Calculator calculator = new Calculator(calculatorWindow);
     }
 }

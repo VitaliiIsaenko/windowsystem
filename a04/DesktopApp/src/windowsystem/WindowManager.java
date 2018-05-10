@@ -43,8 +43,8 @@ public class WindowManager implements IWindowManager {
      */
     @Override
     public void handleMouseDragged(Point clickedPoint, Point toMove) {
-        for (int i = 0; i < windowSystem.getWindows().size(); i++) {
-            windowSystem.getWindows().get(i).react(clickedPoint, toMove);
+        if (windowSystem.getWindows().size() > 0) {
+            windowSystem.getwindows().get(windowSystem.getWindows().size() - 1).react(clickedPoint, toMove);
         }
     }
 
