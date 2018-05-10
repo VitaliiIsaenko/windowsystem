@@ -2,100 +2,172 @@ package windowsystem;
 
 import windowsystem.coordinates.Point;
 import windowsystem.rat.RATButton;
-import windowsystem.rat.RATMouseListener;
+import windowsystem.rat.RATLabel;
 import windowsystem.rat.RATTextField;
 
+import javax.xml.crypto.dsig.SignatureMethod;
 import java.awt.*;
 
 public class Calculator {
     private double result;
-    private RATTextField resultField;
-
-    private double chosenNumber;
     private String chosenAction;
 
+    private double chosenNumber;
+    private boolean enteringNumber;
+    private boolean entertingDecimal;
 
-    public void calculate() {
-        System.out.println("Calculate(): Action(" + getChosenAction() +  ") --- ChosenNumber(" + getChosenNumber() + ")" +
-                " --- PriorResult(" + getResult() + ")");
-        switch (this.getChosenAction()) {
-            case "none":
-                result = this.getChosenNumber();
-                this.resultField.setText(Double.toString(this.getChosenNumber()));
-                break;
-            case "=":
-                result = this.getChosenNumber();
-                this.resultField.setText(Double.toString(result));
-                this.setChosenAction("none");
-                break;
-            case "-":
-                this.result -= this.getChosenNumber();
-                this.resultField.setText(Double.toString(result));
-                this.setChosenAction("none");
-                break;
-            case "*":
-                this.result *= this.chosenNumber;
-                this.resultField.setText(Double.toString(result));
-                this.setChosenAction("none");
-                break;
-            case "/":
-                this.result /= this.chosenNumber;
-                this.resultField.setText(Double.toString(result));
-                this.setChosenAction("none");
-                break;
-            case "+":
-                this.result += this.chosenNumber;
-                this.resultField.setText(Double.toString(result));
-                this.setChosenAction("none");
-        }
-    }
+    private RATTextField resultField;
 
     public Calculator(SimpleWindow calculatorWindow){
+        initNumberButtons(calculatorWindow);
+        initActionButtons(calculatorWindow);
+
+        addResultField(calculatorWindow);
+        addDecimalAction(calculatorWindow);
+        addResultAction(calculatorWindow);
+        addCancelAction(calculatorWindow);
+        addNegativeAction(calculatorWindow);
+
+        setEnteringNumber(false);
+        setEntertingDecimal(false);
+        setChosenNumber(0);
+        setResult(0);
+        setChosenAction("+");
+    }
+
+    private void initNumberButtons(SimpleWindow calculatorWindow){
+        calculatorWindow.setColor(Color.WHITE);
         // Init all integer buttons
         int [] integers = {0,1,2,3,4,5,6,7,8,9};
         for (int integer : integers) {
             // Create button
-            RATButton integerButton = new RATButton(new Point((integer % 3) * 50,Math.floorDiv(integer,3) * 30 +50),
-                    Integer.toString(integer),Color.LIGHT_GRAY,Color.WHITE,Color.black);
+            RATButton integerButton = new RATButton(new Point((integer % 3) * 50,Math.floorDiv(integer,3) * 30 +100),
+                    Integer.toString(integer),Color.BLUE,Color.WHITE,Color.WHITE);
             // Add button to widget
             integerButton.addActionListener((ae) -> {
-                if (this.getChosenAction() == "."){
-                    this.setChosenNumber(this.getChosenNumber() + ((double) Integer.parseInt(integerButton.getText()) / 10));
-                    this.setChosenAction("none");
+                if (isEnteringNumber()){
+                    int floorChosenNumber = (int) Math.floor(getChosenNumber());
+                    if (isEntertingDecimal()){
+                        setChosenNumber(Double.parseDouble(String.valueOf(floorChosenNumber) + "." +  integerButton.getText()));
+                        setEntertingDecimal(false);
+                    } else {
+                        if (floorChosenNumber == getChosenNumber()){
+                            setChosenNumber(Double.parseDouble(String.valueOf(floorChosenNumber) + integerButton.getText()));
+                        } else {
+                            setChosenNumber(Double.parseDouble(String.valueOf(getChosenNumber()) + integerButton.getText()));
+                        }
+                    }
                 } else {
-                    this.setChosenNumber(Integer.parseInt(integerButton.getText()));
+                    setChosenNumber(Integer.parseInt(integerButton.getText()));
+                    setEnteringNumber(true);
                 }
-                this.calculate();
+                displayNumber(getChosenNumber());
                 System.out.println("Integer: " + integerButton.getText() + " pressed -- " + getChosenNumber());
             });
             calculatorWindow.addWidget(integerButton);
         }
+    }
+
+    private void initActionButtons(SimpleWindow calculatorWindow){
         // Init all mathematical actions
-        String [] actions = {"*","+","-","/","=","."};
+        String [] actions = {"*","+","-","/"};
         for(int iteration = 0;iteration < actions.length;iteration++){
             RATButton actionButton;
-            if (actions[iteration] == ".") {
-                actionButton =  new RATButton(new Point(1 * 50,3 * 30 +50),
-                        actions[iteration],Color.LIGHT_GRAY,Color.WHITE,Color.black);
-            } else if(actions[iteration] == "=") {
-                actionButton =  new RATButton(new Point(2 * 50,3 * 30 + 50),
-                        actions[iteration],Color.LIGHT_GRAY,Color.WHITE,Color.black);
-            } else {
-                actionButton = new RATButton(new Point(3 * 50,iteration * 30 + 50),
-                        actions[iteration],Color.LIGHT_GRAY,Color.WHITE,Color.black);
-            }
+            actionButton = new RATButton(new Point(3 * 50,iteration * 30 + 100),
+                    actions[iteration],Color.GREEN,Color.WHITE,Color.black);
             actionButton.addActionListener((ae) -> {
-                this.setChosenAction(actionButton.getText());
+                setEnteringNumber(false);
+                setChosenAction(actionButton.getText());
+                setResult(calculateResult());
                 System.out.println("Action: " + actionButton.getText() + " performed.");
             });
             calculatorWindow.addWidget(actionButton);
         }
+
+    }
+
+    private void addResultField(SimpleWindow calculatorWindow){
         // Add field for displaying results
-        this.resultField = new RATTextField(new Point(40, 10),"",Color.WHITE, Color.CYAN, Color.BLACK);
-        calculatorWindow.addWidget(this.resultField);
-        // Set chosen integer to 0
-        this.chosenNumber = 0;
-        this.chosenAction = "none";
+        setResultField(new RATTextField(new Point(40, 50),"",Color.WHITE, Color.CYAN, Color.BLACK));
+        calculatorWindow.addWidget(getResultField());
+    }
+
+    private void addDecimalAction(SimpleWindow calculatorWindow){
+        RATButton actionButton =  new RATButton(new Point(1 * 50,3 * 30 +100),
+                ".",Color.ORANGE,Color.WHITE,Color.black);
+        actionButton.addActionListener((ae) -> {
+            setEntertingDecimal(true);
+            System.out.println("Action: " + actionButton.getText() + " performed.");
+        });
+        calculatorWindow.addWidget(actionButton);
+
+    }
+
+    private void addResultAction(SimpleWindow calculatorWindow){
+        RATButton actionButton =  new RATButton(new Point(2 * 50,3 * 30 +100),
+                "=",Color.LIGHT_GRAY,Color.WHITE,Color.WHITE);
+        actionButton.addActionListener((ae) -> {
+            setResult(calculateResult());
+            displayNumber(getResult());
+            setEnteringNumber(false);
+            System.out.println("Action: " + actionButton.getText() + " performed.");
+        });
+        calculatorWindow.addWidget(actionButton);
+    };
+
+    private void addCancelAction(SimpleWindow calculatorWindow){
+        RATButton actionButton =  new RATButton(new Point(0 * 50,4 * 30 +100),
+                "AC",Color.RED,Color.WHITE,Color.WHITE);
+        actionButton.addActionListener((ae) -> {
+            setResult(0);
+            setChosenNumber(0);
+            setEnteringNumber(false);
+            setEntertingDecimal(false);
+            displayNumber(getResult());
+            System.out.println("Action: " + actionButton.getText() + " performed.");
+        });
+        calculatorWindow.addWidget(actionButton);
+    };
+
+    private void addNegativeAction(SimpleWindow calculatorWindow){
+        RATButton actionButton =  new RATButton(new Point(1 * 50,4 * 30 +100),
+                " * (-1)",Color.BLACK,Color.WHITE,Color.WHITE);
+        actionButton.addActionListener((ae) -> {
+            if (isEnteringNumber()){
+                setChosenNumber(getChosenNumber() * -1);
+                displayNumber(getChosenNumber());
+            } else {
+                setResult(getResult() * -1);
+                displayNumber(getResult());
+            }
+            System.out.println("Action: " + actionButton.getText() + " performed.");
+        });
+        calculatorWindow.addWidget(actionButton);
+    }
+
+    private double calculateResult(){
+        double result;
+        switch (getChosenAction()){
+            case "+":
+                result = getResult() + getChosenNumber();
+                break;
+            case "-":
+                result = getResult() - getChosenNumber();
+                break;
+            case "/":
+                result = getResult() / getChosenNumber();
+                break;
+            case "*":
+                result = getResult() * getChosenNumber();
+                break;
+            default:
+                result =  0;
+        }
+        return result;
+    }
+
+    public void displayNumber(double number){
+        getResultField().setText(Double.toString(number));
     }
 
     public double getResult() {
@@ -106,12 +178,29 @@ public class Calculator {
         this.result = result;
     }
 
-    public RATTextField getResultField() {
-        return resultField;
+
+    public String getChosenAction() {
+        return chosenAction;
     }
 
-    public void setResultField(RATTextField resultField) {
-        this.resultField = resultField;
+    public void setChosenAction(String chosenAction) {
+        this.chosenAction = chosenAction;
+    }
+
+    public boolean isEnteringNumber() {
+        return enteringNumber;
+    }
+
+    public void setEnteringNumber(boolean enteringNumber) {
+        this.enteringNumber = enteringNumber;
+    }
+
+    public boolean isEntertingDecimal() {
+        return entertingDecimal;
+    }
+
+    public void setEntertingDecimal(boolean entertingDecimal) {
+        this.entertingDecimal = entertingDecimal;
     }
 
     public double getChosenNumber() {
@@ -122,11 +211,12 @@ public class Calculator {
         this.chosenNumber = chosenNumber;
     }
 
-    public String getChosenAction() {
-        return chosenAction;
+
+    public RATTextField getResultField() {
+        return resultField;
     }
 
-    public void setChosenAction(String chosenAction) {
-        this.chosenAction = chosenAction;
+    public void setResultField(RATTextField resultField) {
+        this.resultField = resultField;
     }
 }

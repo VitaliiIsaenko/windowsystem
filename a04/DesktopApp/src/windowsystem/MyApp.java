@@ -47,7 +47,7 @@ public class MyApp {
         // Expert Program: Calculator
 
         // Creating the calculator window
-        SimpleWindow calculatorWindow = ws.addWindow(200, 200, "Calculator");
+        SimpleWindow calculatorWindow = ws.addWindow(200, 300, "Calculator");
         // Attach the calculator to the window;
         Calculator calculator = new Calculator(calculatorWindow);
     }
