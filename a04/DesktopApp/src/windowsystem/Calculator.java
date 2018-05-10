@@ -78,7 +78,11 @@ public class Calculator {
             actionButton.addActionListener((ae) -> {
                 setEnteringNumber(false);
                 setChosenAction(actionButton.getText());
-                setResult(calculateResult());
+                if (getResult() != 0) {
+                    setResult(calculateResult());
+                } else {
+                    setResult(getChosenNumber());
+                }
                 System.out.println("Action: " + actionButton.getText() + " performed.");
             });
             calculatorWindow.addWidget(actionButton);
@@ -109,6 +113,8 @@ public class Calculator {
         actionButton.addActionListener((ae) -> {
             setResult(calculateResult());
             displayNumber(getResult());
+            setResult(0);
+            setChosenNumber(0);
             setEnteringNumber(false);
             System.out.println("Action: " + actionButton.getText() + " performed.");
         });
@@ -157,11 +163,8 @@ public class Calculator {
             case "/":
                 result = getResult() / getChosenNumber();
                 break;
-            case "*":
-                result = getResult() * getChosenNumber();
-                break;
             default:
-                result =  0;
+                result = getResult() * getChosenNumber();
         }
         return result;
     }
