@@ -8,7 +8,13 @@ import windowsystem.rat.RATTextField;
 import javax.xml.crypto.dsig.SignatureMethod;
 import java.awt.*;
 
-public class Calculator {
+/**
+ * This class represent a calculator object.
+ * Normally to initiate a calculator object a simple window needs to be passed to the contrcutor.
+ * The constructor then generates all the neseccary elements for the calculator and attaches it to the given window.
+ */
+
+ public class Calculator {
     private double result;
     private String chosenAction;
 
@@ -18,6 +24,10 @@ public class Calculator {
 
     private RATTextField resultField;
 
+    /**
+     * Contructor responsible for generating a calculator object.
+     * @param calculatorWindow
+     */
     public Calculator(SimpleWindow calculatorWindow){
         initNumberButtons(calculatorWindow);
         initActionButtons(calculatorWindow);
@@ -35,6 +45,12 @@ public class Calculator {
         setChosenAction("+");
     }
 
+    /**
+     * Generates a button for 0,1,2,..,9
+     * Next it attaches an action listener to the button,
+     * which gets fired when the button is clicked
+     * @param calculatorWindow
+     */
     private void initNumberButtons(SimpleWindow calculatorWindow){
         calculatorWindow.setColor(Color.WHITE);
         // Init all integer buttons
@@ -68,6 +84,12 @@ public class Calculator {
         }
     }
 
+    /**
+     * Generates a button for +,-,/,*
+     * Next it attaches an action listener to the button,
+     * which gets fired when the button is clicked.
+     * @param calculatorWindow
+     */
     private void initActionButtons(SimpleWindow calculatorWindow){
         // Init all mathematical actions
         String [] actions = {"*","+","-","/","%"};
@@ -90,12 +112,20 @@ public class Calculator {
 
     }
 
+    /**
+     * Generates and shows the field resposible for showing the results
+     * @param calculatorWindow
+     */
     private void addResultField(SimpleWindow calculatorWindow){
         // Add field for displaying results
         setResultField(new RATTextField(new Point(40, 50),"",Color.WHITE, Color.CYAN, Color.BLACK));
         calculatorWindow.addWidget(getResultField());
     }
 
+    /**
+     * Allows the calculator to accept decimals as input and not only integers
+     * @param calculatorWindow
+     */
     private void addDecimalAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(1 * 50,3 * 30 +100),
                 ".",Color.ORANGE,Color.WHITE,Color.black);
@@ -107,6 +137,11 @@ public class Calculator {
 
     }
 
+    /**
+     * Adds the equal button to the window.
+     * When the button is pressed the result is dispayed in the resultField afterwards.
+     * @param calculatorWindow
+     */
     private void addResultAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(2 * 50,3 * 30 +100),
                 "=",Color.LIGHT_GRAY,Color.WHITE,Color.WHITE);
@@ -121,6 +156,10 @@ public class Calculator {
         calculatorWindow.addWidget(actionButton);
     };
 
+    /**
+     * Adds an AC button to the calculator which simply resets everything.
+     * @param calculatorWindow
+     */
     private void addCancelAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(0 * 50,4 * 30 +100),
                 "AC",Color.RED,Color.WHITE,Color.WHITE);
@@ -135,6 +174,10 @@ public class Calculator {
         calculatorWindow.addWidget(actionButton);
     };
 
+    /**
+     * Allows the calculator to accept negative values
+     * @param calculatorWindow
+     */
     private void addNegativeAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(1 * 50,4 * 30 +100),
                 " * (-1)",Color.BLACK,Color.WHITE,Color.WHITE);
@@ -151,6 +194,11 @@ public class Calculator {
         calculatorWindow.addWidget(actionButton);
     }
 
+
+    /**
+     * Resposible for calculating the result of the current mathematical equation.
+     * @return result
+     */
     private double calculateResult(){
         double result;
         switch (getChosenAction()){
