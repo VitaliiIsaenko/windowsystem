@@ -1,12 +1,3 @@
-package windowsystem;
-
-import windowsystem.coordinates.Coordinates;
-import windowsystem.coordinates.Point;
-import windowsystem.rat.RATButton;
-import windowsystem.rat.RATLabel;
-import windowsystem.rat.RATTextField;
-import windowsystem.rat.RATWidget;
-
 import java.awt.*;
 
 /**
