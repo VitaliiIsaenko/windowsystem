@@ -1,15 +1,27 @@
 import java.awt.*;
 
+/**
+ * Class for label
+ */
 public class RATLabel extends RATWidget {
     private String text;
     private Color textColor;
 
+    /**
+     * Initializes new label
+     * @param startingPoint starting point of the label on the window
+     * @param text text of the label
+     * @param textColor color of the label text
+     */
     public RATLabel(Point startingPoint, String text, Color textColor) {
         super(startingPoint);
         this.textColor = textColor;
         this.text = text;
     }
 
+    /**
+     * Draws itself
+     */
     @Override
     public void draw() {
         super.draw();
