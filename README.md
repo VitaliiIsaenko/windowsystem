@@ -1,25 +1,17 @@
-### Expert Features
+3)
 
-## Minimising windows
+A callback function is simply a function which some piece of code calls, executes and return to the caller.  
 
-**minimisedSimpleWindows**: List containing all minimised Simple Windows
-**simpleWindows:** List containing all simple windows.
+It's a mechanism for postponing the decision of what function to call. Instead of having to make this decision when writing the code, you can make it at run time and choose a function which didn't even exist before.  This mechanism allows the use of the "plug-in" style to extend the capabilities of a piece of code. 
 
-When the green button in top right corner of any window is clicked, the simple window object is removed from the list simpleWindows and added to the list minimisedSimpleWindows. 
+In C this is easily handled by pointers. In other languages it is handled in different ways. 
 
-All of the simpleWindows in the minimisedSimpleWindows list are **displayed as icons** in the **bottom left** corner of the panel. When their dedicated button is pressed the simpleWindow object is **removed** from the  **minimisedSimpleWindows** list and **added** to the **simpleWindows** list  (get maximised)
+For example when registering an event listener, one normally defines a function which gets called when the event is triggered. Callback functions allow for this to happen. 
 
-
-## Window Reordering 
-
-**simpleWindows:** List containing all simple windows.
-**n:**  size of *simpleWindows*
-
-**Clicking** on any **visible part** of a any **window** will bring it to **back of the list**. 
-
-The drawing method **iterates** over the **list of simple Windows** from **0 to n-1**, which means that the **simple window in position x** is displayed on **top** of **all other simple windows in positions y < x** .
+Java Swing Event listeners work in a similar way. You can register an event listener and perform any function you want when the event is triggered. The guys who designed the Java Swing library didn't hardcode every possible function the event listener can receive. Instead they made it abstract and allow the event listener to receive any function and perform it. In a certain way it is also a callback function.
 
 
-## Active Window 
+More on Event Listener in C:
 
-At all times one window **exactly one window** is marked **active**. This window is always the last element in the list **simpleWindows** .  It is displayed on top of everything else 
+To register an event listener in C one could the Observer pattern for example. Pointers make it easy to register callback functions for the events.
+
