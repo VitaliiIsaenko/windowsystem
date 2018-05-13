@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Our main app to test window system
  */
-public class MyApp {
+public class HelloWorldGraphical {
 
     public static void main(String[] args) {
         WindowSystem ws = new WindowSystem(600, 600, Color.YELLOW);

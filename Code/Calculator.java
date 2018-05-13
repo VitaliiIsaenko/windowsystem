@@ -13,6 +13,7 @@ import java.awt.*;
     private boolean enteringNumber;
     private boolean entertingDecimal;
     private boolean neutralElement;
+    private boolean actionPerformed;
 
     private RATTextField resultField;
 
@@ -33,6 +34,7 @@ import java.awt.*;
         setEnteringNumber(false);
         setEntertingDecimal(false);
         setChosenNumber(0);
+        setActionPerformed(false);
         setNeutralElement(true);
         setChosenAction("+");
     }
@@ -53,6 +55,7 @@ import java.awt.*;
                     Integer.toString(integer),Color.BLUE,Color.WHITE,Color.WHITE);
             // Add button to widget
             integerButton.addActionListener((ae) -> {
+                setActionPerformed(false);
                 if (isEnteringNumber()){
                     int floorChosenNumber = (int) Math.floor(getChosenNumber());
                     if (isEntertingDecimal()){
@@ -84,20 +87,46 @@ import java.awt.*;
      */
     private void initActionButtons(SimpleWindow calculatorWindow){
         // Init all mathematical actions
-        String [] actions = {"*","+","-","/","%"};
-        for(int iteration = 0;iteration < actions.length;iteration++){
-            RATButton actionButton;
-            actionButton = new RATButton(new Point(3 * 50,iteration * 30 + 100),
-                    actions[iteration],Color.GREEN,Color.WHITE,Color.black);
-            actionButton.addActionListener((ae) -> {
-                setEnteringNumber(false);
-                setChosenAction(actionButton.getText());
-                setResult(calculateResult());
-                System.out.println("Action: " + actionButton.getText() + " performed.");
-            });
-            calculatorWindow.addWidget(actionButton);
-        }
+        String [] simpleActions = {"*","+","-","/","%"};
+        String [] geoActions = {"cos","sin","tan"};
+        String [] expActions = {"x^2","sqrt","log10"};
+        String [] [] actions = {simpleActions,geoActions,expActions};
+        for (int i = 0;i < actions.length;i++) {
+            for (int iteration = 0;iteration < actions[i].length;iteration++) {
+                RATButton actionButton;
+                if (i == 0) {
+                   actionButton = new RATButton(new Point(3 * 50,iteration * 30 + 100), 
+                    actions[i][iteration],Color.GREEN,Color.WHITE,Color.black);
+                } else if(i == 1){
+                    actionButton = new RATButton(new Point(50 * iteration + 50,5*30 +100), 
+                    actions[i][iteration],Color.ORANGE,Color.WHITE,Color.black);
+                } else {
+                    actionButton = new RATButton(new Point(50 * iteration + 50,6*30 +100), 
+                    actions[i][iteration],Color.MAGENTA,Color.WHITE,Color.WHITE);
+                }
+                actionButton.addActionListener((ae) -> {
+                    if (!isActionPerformed()) {
+                        setActionPerformed(true);
+                        setEnteringNumber(false);
+                        setChosenAction(actionButton.getText());
+                        setResult(calculateResult());
+                        System.out.println("Action: " + actionButton.getText() + " performed.");   
+                    } else {
+                        System.out.println("Action: " + actionButton.getText() + " changed.");   
+                    }
 
+                    setChosenAction(actionButton.getText());
+
+                    if (actionButton.getText() == "*" || actionButton.getText() == "+" || actionButton.getText() == "-" || 
+                            actionButton.getText() == "/" || actionButton.getText() == "%") {
+                        getResultField().setText(getResult() + actionButton.getText());
+                    } else {
+                        getResultField().setText(actionButton.getText() + " _ ");
+                    }
+                });
+                calculatorWindow.addWidget(actionButton);
+            }
+        }
     }
 
     /**
@@ -116,7 +145,7 @@ import java.awt.*;
      */
     private void addDecimalAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(1 * 50,3 * 30 +100),
-                ".",Color.ORANGE,Color.WHITE,Color.black);
+                ".",Color.YELLOW,Color.WHITE,Color.black);
         actionButton.addActionListener((ae) -> {
             setEntertingDecimal(true);
             System.out.println("Action: " + actionButton.getText() + " performed.");
@@ -134,12 +163,14 @@ import java.awt.*;
         RATButton actionButton =  new RATButton(new Point(2 * 50,3 * 30 +100),
                 "=",Color.LIGHT_GRAY,Color.WHITE,Color.WHITE);
         actionButton.addActionListener((ae) -> {
-            setResult(calculateResult());
-            displayNumber(getResult());
-            setEnteringNumber(false);
-            setNeutralElement(true);
-            setChosenNumber(getResult());
-            System.out.println("Action: " + actionButton.getText() + " performed. " + getResult());
+            if (!isActionPerformed()) {
+                setResult(calculateResult());
+                displayNumber(getResult());
+                setEnteringNumber(false);
+                setNeutralElement(true);
+                setChosenNumber(getResult());
+                System.out.println("Action: " + actionButton.getText() + " performed. " + getResult());   
+            }
         });
         calculatorWindow.addWidget(actionButton);
     };
@@ -155,6 +186,8 @@ import java.awt.*;
             setEnteringNumber(false);
             setEntertingDecimal(false);
             displayNumber(0);
+            setResult(0);
+            setChosenNumber(0);
             setNeutralElement(true);
             System.out.println("Action: " + actionButton.getText() + " performed.");
         });
@@ -167,9 +200,9 @@ import java.awt.*;
      */
     private void addNegativeAction(SimpleWindow calculatorWindow){
         RATButton actionButton =  new RATButton(new Point(1 * 50,4 * 30 +100),
-                " * (-1)",Color.BLACK,Color.WHITE,Color.WHITE);
+                " * (-1)",Color.WHITE,Color.BLACK,Color.BLACK);
         actionButton.addActionListener((ae) -> {
-            if (isEnteringNumber()){
+            if (isEnteringNumber() || isNeutralElement()){
                 setChosenNumber(getChosenNumber() * -1);
                 displayNumber(getChosenNumber());
             } else {
@@ -204,6 +237,24 @@ import java.awt.*;
                 break;
             case "%":
                 result = getResult() % getChosenNumber();
+                break;
+            case "x^2":
+                result = Math.pow(getChosenNumber(),2);
+                break;
+            case "sqrt":
+                result = Math.sqrt(getChosenNumber());
+                break;
+            case "log10":
+                result = Math.log10(getChosenNumber());
+                break;
+            case "tan":
+                result = Math.tan(getChosenNumber());
+                break;
+            case "sin":
+                result = Math.sin(getChosenNumber());
+                break;
+            case "cos":
+                result = Math.cos(getChosenNumber());
                 break;
             default:
                 result = getResult() * getChosenNumber();
@@ -255,6 +306,15 @@ import java.awt.*;
     public void setNeutralElement(boolean neutralElement) {
         this.neutralElement = neutralElement;
     }
+
+    public boolean isActionPerformed() {
+        return actionPerformed;
+    }
+
+    public void setActionPerformed(boolean actionPerformed) {
+        this.actionPerformed = actionPerformed;
+    }
+
 
     public double getChosenNumber() {
         return chosenNumber;
